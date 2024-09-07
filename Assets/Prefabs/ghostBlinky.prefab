@@ -99,3 +99,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   timeWaiting: 1
+  timeScatter: 7
+  timeChasing: 20

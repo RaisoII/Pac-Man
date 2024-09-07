@@ -9,15 +9,14 @@ public class MovPacMan : MonoBehaviour
     [SerializeField] private Grid gridGame;
     private Vector2 direction;
     private Vector2 nextDirection;
-    private Node actualNode,previousNode,targetNode;
+    private Node currentNode,previousNode,targetNode;
     // Start is called before the first frame update
     void Start()
     {
         GameObject scripts = GameObject.Find("GeneralScripts");
     
         gridGame = scripts.GetComponent<Grid>();
-        actualNode = gridGame.getNode(transform.position);
-        Debug.Log(actualNode.transform.position);
+        currentNode = gridGame.getNode(transform.position);
         direction = Vector2.left;
         changedPosition(direction);
     }
@@ -51,7 +50,7 @@ public class MovPacMan : MonoBehaviour
 
     private Node canMove(Vector2 dir)
     {
-        Node moveToNode  = actualNode.getNeightbor(dir); 
+        Node moveToNode  = currentNode.getNeightbor(dir); 
         return moveToNode;
     }
 
@@ -60,7 +59,7 @@ public class MovPacMan : MonoBehaviour
         if(dir != direction)
             nextDirection = dir;
 
-        if(actualNode != null)
+        if(currentNode != null)
         {
             Node moveToNode = canMove(dir);
             
@@ -68,15 +67,15 @@ public class MovPacMan : MonoBehaviour
             {
                 direction = dir;
                 targetNode = moveToNode;
-                previousNode = actualNode;
-                actualNode = null;
+                previousNode = currentNode;
+                currentNode = null;
             }
         }
     }
 
     private void move()
     {
-        if(targetNode !=  actualNode  && targetNode != null)
+        if(targetNode !=  currentNode  && targetNode != null)
         {
             if(nextDirection == direction*-1)
             {
@@ -88,8 +87,8 @@ public class MovPacMan : MonoBehaviour
 
             if(onTarget())
             {
-                actualNode = targetNode;
-                transform.localPosition = actualNode.transform.position;
+                currentNode = targetNode;
+                transform.localPosition = currentNode.transform.position;
                 Node moveToNode = canMove(nextDirection);
                 if(moveToNode != null)
                     direction = nextDirection;
@@ -100,8 +99,8 @@ public class MovPacMan : MonoBehaviour
                 if(moveToNode != null)
                 {
                     targetNode = moveToNode;
-                    previousNode = actualNode;
-                    actualNode = null;
+                    previousNode = currentNode;
+                    currentNode = null;
                 }
                 else
                     direction = Vector2.zero;
@@ -123,4 +122,7 @@ public class MovPacMan : MonoBehaviour
         Vector2 dif = targetPosition - (Vector2)previousNode.transform.position;
         return dif.sqrMagnitude;
     }
+
+    public Vector2 getDirection() => direction;
+
 }

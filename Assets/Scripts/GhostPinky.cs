@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class GhostPinky : Ghost
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void Awake()
     {
-        
+        base.Awake();
+        OnReachedDestination += HandleReachedDestination;
+        Invoke("findPathStart",1.5f);
+    }
+    
+    private void findPathStart()
+    {
+        startPath.Add(endNode);
+        startPath.Add(endNode.getNeightbor(Vector2.up));
     }
 
-    // Update is called once per frame
-    void Update()
+    private void HandleReachedDestination()
     {
-        
+        Vector2 pacManPosition = movPacMan.gameObject.transform.localPosition;
+        pacManPosition = new Vector2(Mathf.RoundToInt(pacManPosition.x),Mathf.RoundToInt(pacManPosition.y));
+        Vector2 direction = movPacMan.getDirection();
+        targetVector = pacManPosition + (direction * 4);
     }
 }

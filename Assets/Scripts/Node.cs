@@ -41,4 +41,10 @@ public class Node : MonoBehaviour
 
         return neightbor;
     }
+
+    public Vector2 getDirectionNode(Node node)
+    {
+        Vector2 dis = (Vector2)node.transform.position - (Vector2)transform.position;
+        return dis.normalized;
+    }
 }

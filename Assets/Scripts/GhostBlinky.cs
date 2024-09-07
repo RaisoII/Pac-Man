@@ -6,12 +6,21 @@ public class GhostBlinky : Ghost
 {
     protected override void Awake()
     {
+        grid = GameObject.Find("GeneralScripts").GetComponent<Grid>();
+        OnReachedDestination += HandleReachedDestination;
         StartCoroutine(waitingTime());
     }
 
     private IEnumerator waitingTime()
     {
         yield return new WaitForSeconds(timeWaiting);
-        Debug.Log("sale: "+gameObject.name);
+        ChangedState(GhostState.Scatter);
+    }
+
+     // Maneja la llegada al destino
+    private void HandleReachedDestination()
+    {
+        targetVector = movPacMan.gameObject.transform.position;
+        targetVector = new Vector2(Mathf.RoundToInt(targetVector.x),Mathf.RoundToInt(targetVector.y));
     }
 }
