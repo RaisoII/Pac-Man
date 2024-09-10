@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7257369790989371658}
   m_Layer: 0
   m_Name: ghostPinky
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,3 +101,4 @@ MonoBehaviour:
   timeWaiting: 3
   timeScatter: 7
   timeChasing: 20
+  timeFrightened: 100

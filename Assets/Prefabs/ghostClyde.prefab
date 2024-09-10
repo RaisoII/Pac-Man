@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 193818905431904030}
   m_Layer: 0
   m_Name: ghostClyde
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,3 +101,4 @@ MonoBehaviour:
   timeWaiting: 7
   timeScatter: Infinity
   timeChasing: 20
+  timeFrightened: 100

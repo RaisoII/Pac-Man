@@ -7,7 +7,7 @@ using System.Linq;
 public class Ghost : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] protected float timeWaiting,timeScatter,timeChasing;
+    [SerializeField] protected float timeWaiting,timeScatter,timeChasing,timeFrightened;
     protected Node currentNode,startNode,endNode; // buclean entre estos dos al principio 
     protected MovPacMan movPacMan;
     protected Vector2 targetVector;
@@ -117,7 +117,63 @@ public class Ghost : MonoBehaviour
     }
 
     // Comportamiento común cuando el fantasma está asustado
-    protected virtual void Frightened() => StartCoroutine(movingToPoint(targetVector));
+    protected virtual IEnumerator Frightened()
+    {
+        float time = 0;
+        
+        // en primera instancia tengo que regresar a mi nodo anterior (para una pos exacta)
+        while( time < timeFrightened)
+        {
+            while(HasReachedDestination(currentNode.transform.localPosition))
+            {
+                time += Time.deltaTime;
+                Move(currentNode.transform.localPosition);
+                yield return null;
+            }
+            
+            break;
+        }
+
+        transform.position = currentNode.transform.position;
+
+        // en segundo elegir el vecino más distante al pacman, ir al nodo y repetir
+        while(time < timeFrightened)
+        {
+            Node [] neightbors = currentNode.getNeightbors();
+            
+            float minimalDistance = 0; // acá hay que tomar el mayor de las distancias
+            Vector2 posPacMan = movPacMan.transform.position;
+            
+            int intX = Mathf.RoundToInt(posPacMan.x);
+            int intY = Mathf.RoundToInt(posPacMan.y); 
+            posPacMan = new Vector2(intX,intY);
+            
+            Node nextNode = null;
+            
+            foreach(Node neightbor in neightbors)
+            {
+                float distanceForPacMan = getDistance(posPacMan,neightbor.transform.localPosition);
+                if(distanceForPacMan > minimalDistance)
+                {
+                    minimalDistance = distanceForPacMan;
+                    nextNode = neightbor; 
+                }
+            }
+
+            while(HasReachedDestination(nextNode.transform.localPosition))
+            {
+                time += Time.deltaTime;
+                Move(nextNode.transform.localPosition);
+                yield return null;
+            }
+
+            transform.position = nextNode.transform.position;
+            currentNode = nextNode;
+        }
+
+        // una vez que sale tendría que seguir la rutina anterior?
+        ChangedState(GhostState.Chasing);
+    }
     
     protected IEnumerator WaitingHouse()
     {
@@ -125,18 +181,6 @@ public class Ghost : MonoBehaviour
         yield return new WaitForSeconds(timeWaiting);
         StopCoroutine(rutineWaiting);
         StartCoroutine(exitHouse());
-    }
-
-    protected IEnumerator movingToPoint(Vector2 pos)
-    {
-        while (HasReachedDestination(pos))
-        {
-            Move(pos);
-            yield return null;    
-        }
-        
-        transform.position = pos;
-        OnReachedDestination?.Invoke(); // Llama al evento si ha llegado
     }
 
     protected IEnumerator exitHouse()
@@ -194,7 +238,7 @@ public class Ghost : MonoBehaviour
                 currentRutine = StartCoroutine(Chase());
                 break;
             case GhostState.Frightened:
-                Frightened();
+                currentRutine =  StartCoroutine(Frightened());
                 break;
             case GhostState.Scatter:
                 currentRutine = StartCoroutine(Scatter());
@@ -236,6 +280,15 @@ public class Ghost : MonoBehaviour
         return idealNode;
     }
 
+    public void ChangedStateFrightened()
+    {
+        if(currentState == GhostState.Frightened)
+            timeFrightened += 10;
+        else
+        {
+            ChangedState(GhostState.Frightened);
+        }
+    }
     protected float getDistance(Vector2 pos,Vector2 target)
     {
         float dx = Mathf.Abs(pos.x - target.x);
