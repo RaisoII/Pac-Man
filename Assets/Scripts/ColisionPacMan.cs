@@ -4,28 +4,34 @@ using UnityEngine;
 
 public class ColisionPacMan : MonoBehaviour
 {
-    private levelManager level;
+    private GameManager gameManager;
+    private LevelManager levelManager;
 
     private void Start()
     {
-        level = GameObject.Find("GeneralScripts").GetComponent<levelManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
+    private void OnEnable()
+    {
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+    }
+    
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.CompareTag("pacDots"))
         {
             bool activeFrightened = col.gameObject.GetComponent<PacDots>().getactiveFrightened();
-            level.deletePacDot(activeFrightened);
-            Destroy(gameObject);
+            levelManager.deletePacDot(activeFrightened);
+            Destroy(col.gameObject);
         }
         else if(col.CompareTag("Ghost"))
         {
-            if(level.getIsfrightenedTime())
+            if(levelManager.getIsfrightenedTime())
             {
                 Destroy(col.gameObject);
             }
             else
-                level.deathPacMan();
+                levelManager.deathPacMan();
         }
     }
 }

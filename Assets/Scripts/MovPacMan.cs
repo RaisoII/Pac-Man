@@ -6,7 +6,6 @@ public class MovPacMan : MonoBehaviour
 {
 
     [SerializeField] private float speed;
-    [SerializeField] private Grid gridGame;
     private Vector2 direction;
     private Vector2 nextDirection;
     private Node currentNode,previousNode,targetNode;
@@ -15,8 +14,6 @@ public class MovPacMan : MonoBehaviour
     {
         GameObject scripts = GameObject.Find("GeneralScripts");
     
-        gridGame = scripts.GetComponent<Grid>();
-        currentNode = gridGame.getNode(transform.position);
         direction = Vector2.left;
         changedPosition(direction);
     }
@@ -131,6 +128,7 @@ public class MovPacMan : MonoBehaviour
         Vector2 dif = targetPosition - (Vector2)previousNode.transform.position;
         return dif.sqrMagnitude;
     }
+    public void setNodeIni(Node ini) => currentNode = ini;
 
     public Vector2 getDirection() => direction;
 

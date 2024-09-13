@@ -1,28 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class levelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI score;
-    [SerializeField] private float timeFrightenedRutine,timeFrightenedRutineAux;
+    [SerializeField] private float timeFrightenedRutine;
+    private float timeFrightenedRutineAux;
     private Coroutine frightenedRutine;
-    private Ghost[] ghostArray;
     private MovPacMan movPac;
     private  int cantPacDots;
+    private GameManager gameManager;
+    private SpawnerManager spawn;
+    private Ghost [] ghostArray;
 
-    private void Start()
+    private void Awake()
     {
-        movPac = GameObject.FindGameObjectWithTag("PacMan").GetComponent<MovPacMan>();
-        cantPacDots =  GameObject.FindGameObjectsWithTag("pacDots").Length;
-        GameObject[] ghosts = GameObject.FindGameObjectsWithTag("Ghost");
-        ghostArray = new Ghost[ghosts.Length];
+        spawn = gameObject.GetComponent<SpawnerManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        spawn.instantiatePrefabs();
+        List<GameObject> listGhost = spawn.getListGhost();
+        ghostArray = new Ghost[listGhost.Count];
         
-        for(int i = 0; i < ghosts.Length; i++) 
-            ghostArray[i] =  ghosts[i].GetComponent<Ghost>();
+        for(int i=0; i < listGhost.Count;i++)
+        {
+            GameObject ghost = listGhost[i];
+            Ghost g = ghost.GetComponent<Ghost>();
+            ghostArray[i] = g;
+        }
+
+        movPac = spawn.getPacMan().GetComponent<MovPacMan>();
 
         StartCoroutine(startGame());
+    }
+
+    public void resetPositions()
+    {
+        spawn.resetPositions();
     }
 
     private IEnumerator startGame()
@@ -36,7 +49,6 @@ public class levelManager : MonoBehaviour
         
         movPac.enabled = true;
     }
-
     public void deletePacDot(bool activeFrightened)
     {
         cantPacDots--;
@@ -53,13 +65,10 @@ public class levelManager : MonoBehaviour
                 frightenedRutine = StartCoroutine(frightenedTime());
             }
             else 
-            {
                 timeFrightenedRutineAux += timeFrightenedRutine; 
-            }
         }
 
-        int valueScore = int.Parse(score.text);
-        score.text = ""+(valueScore + 10);
+        gameManager.incrementScore();
     }
 
     private IEnumerator frightenedTime()
@@ -76,14 +85,27 @@ public class levelManager : MonoBehaviour
         foreach(Ghost ghost in ghostArray)
             ghost.ChangedStateFrightened(false);
     }
+    
+    private IEnumerator restartGame()
+    {
+        yield return new WaitForSeconds(3);
+        resetPositions();
+        StartCoroutine(startGame());
+    }
 
     public void deathPacMan()
     {
         foreach(Ghost g in ghostArray)
+        {
+            g.stopStates();
             g.enabled = false;
-
+        }
         movPac.enabled = false;
-        Debug.Log("reset");
+        
+        bool continueGame =  gameManager.removeOneLive();
+
+        if(continueGame)    
+            StartCoroutine(restartGame());
     }
 
     public bool getIsfrightenedTime() => frightenedRutine != null;

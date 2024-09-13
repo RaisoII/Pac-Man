@@ -9,7 +9,7 @@ public class GhostPinky : Ghost
         base.Awake();
         
         OnReachedDestination += HandleReachedDestination;
-        Invoke("findPathStart",1.5f);
+        Invoke("findPathStart",3.5f);
     }
     
     private void findPathStart()

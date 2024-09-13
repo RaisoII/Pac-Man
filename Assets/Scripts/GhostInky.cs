@@ -11,7 +11,7 @@ public class GhostInky : Ghost
         
         OnReachedDestination += HandleReachedDestination;
 
-        Invoke("findPathStart",1.5f);
+        Invoke("findPathStart",3.5f);
         blinky = GameObject.Find("ghostBlinky(Clone)");
     }
     

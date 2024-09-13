@@ -11,7 +11,7 @@ public class GhostClyde : Ghost
         OnReachedDestination += HandleReachedDestination;
         checkDistancePacMan += DistanceForPackMan;
         
-        Invoke("findPathStart",1.5f);
+        Invoke("findPathStart",3.5f);
     }
 
     private void findPathStart()

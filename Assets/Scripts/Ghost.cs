@@ -13,7 +13,6 @@ public class Ghost : MonoBehaviour
     protected MovPacMan movPacMan;
     protected Vector2 targetVector;
     protected Vector2 direction = Vector2.zero;
-    protected Grid grid;
     protected List<Node> startPath;
     protected Node[] patrolPath;
     protected int previousState; // 0-persecusión 1-dispersion 
@@ -40,11 +39,10 @@ public class Ghost : MonoBehaviour
     {
         originalColor = render.color;
         startPath = new List<Node>();
-        grid = GameObject.Find("GeneralScripts").GetComponent<Grid>();
     }
 
     //es invocado en el awake
-    public void startWaiting()
+    public virtual void startWaiting()
     {
         endNode = startNode.getNeightbor(Vector2.up);
         StartCoroutine(WaitingHouse());
@@ -367,6 +365,7 @@ public class Ghost : MonoBehaviour
                 ChangedState(GhostState.Frightened);
             else
                 currentState = GhostState.Frightened;
+            speed = speed / 2f;
         }
         else
         {
@@ -375,8 +374,20 @@ public class Ghost : MonoBehaviour
             render.color = originalColor;
             if(previousState == currentState) // el maldito clyde puede cambiar antes a chasing, lo invocaría dos veces
                 ChangedState(GhostState.Chasing);
+            speed = speed * 2f;
         }
     }
+
+    public void deathGhost()
+    {
+        if(currentRutine != null)
+            StopCoroutine(currentRutine);
+        
+        speed = speed * 4f;
+        render.color = originalColor;
+
+    }
+
     protected float getDistance(Vector2 pos,Vector2 target)
     {
         float dx = Mathf.Abs(pos.x - target.x);
@@ -384,6 +395,9 @@ public class Ghost : MonoBehaviour
             
         return  dx + dy;
     }
+
+    // tiene que parar todas las rutinas por si algun fantasma aún está en la casa, si es el caso hay dos rutinas corriendo
+    public void stopStates() => StopAllCoroutines();
 
     public void setParametrerInitial(Node ini,Node[] patrolPath)
     {
