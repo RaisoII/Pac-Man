@@ -5,7 +5,9 @@ using UnityEngine;
 public class Node : MonoBehaviour
 {
     [SerializeField] private Node[] neighbors;
+    [SerializeField] private Node portalNode;
     Vector2[] possibleDirections;
+
     void Start()
     {
         searchDirections();
@@ -47,4 +49,6 @@ public class Node : MonoBehaviour
         Vector2 dis = (Vector2)node.transform.position - (Vector2)transform.position;
         return dis.normalized;
     }
+    
+    public Node getPortalNode() => portalNode;
 }

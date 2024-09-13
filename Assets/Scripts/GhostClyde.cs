@@ -7,8 +7,10 @@ public class GhostClyde : Ghost
     protected override void Awake()
     {
         base.Awake();
+        
         OnReachedDestination += HandleReachedDestination;
         checkDistancePacMan += DistanceForPackMan;
+        
         Invoke("findPathStart",1.5f);
     }
 
@@ -21,8 +23,8 @@ public class GhostClyde : Ghost
 
     private void HandleReachedDestination()
     {
-        float distance = getDistance(transform.localPosition,movPacMan.gameObject.transform.localPosition);
-        if(distance < 8)
+        float distance = getDistance(transform.position,movPacMan.gameObject.transform.position);
+        if(distance < 8 && currentState != GhostState.Scatter)
             ChangedState(GhostState.Scatter);
         else
         {
@@ -33,8 +35,11 @@ public class GhostClyde : Ghost
 
     private void DistanceForPackMan()
     {
-        float distance = getDistance(transform.localPosition,movPacMan.gameObject.transform.localPosition);
+        float distance = getDistance(transform.position,movPacMan.gameObject.transform.position);
         if(distance > 8)
+        {
+            Debug.Log("cambia la perra: "+distance);
             ChangedState(GhostState.Chasing);
+        }
     }
 }

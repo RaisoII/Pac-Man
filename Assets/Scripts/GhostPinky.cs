@@ -7,6 +7,7 @@ public class GhostPinky : Ghost
     protected override void Awake()
     {
         base.Awake();
+        
         OnReachedDestination += HandleReachedDestination;
         Invoke("findPathStart",1.5f);
     }

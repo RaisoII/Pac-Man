@@ -8,7 +8,9 @@ public class GhostInky : Ghost
     protected override void Awake()
     {
         base.Awake();
+        
         OnReachedDestination += HandleReachedDestination;
+
         Invoke("findPathStart",1.5f);
         blinky = GameObject.Find("ghostBlinky(Clone)");
     }

@@ -6,8 +6,11 @@ public class GhostBlinky : Ghost
 {
     protected override void Awake()
     {
+        originalColor = render.color;
         grid = GameObject.Find("GeneralScripts").GetComponent<Grid>();
+        
         OnReachedDestination += HandleReachedDestination;
+        
         StartCoroutine(waitingTime());
     }
 

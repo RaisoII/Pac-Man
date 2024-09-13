@@ -89,6 +89,15 @@ public class MovPacMan : MonoBehaviour
             {
                 currentNode = targetNode;
                 transform.localPosition = currentNode.transform.position;
+
+                Node portalNode = currentNode.getPortalNode();
+                
+                if(portalNode != null)
+                {
+                    transform.localPosition = portalNode.transform.position;
+                    currentNode = portalNode;
+                }
+
                 Node moveToNode = canMove(nextDirection);
                 if(moveToNode != null)
                     direction = nextDirection;
