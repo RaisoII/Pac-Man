@@ -38,7 +38,6 @@ public class GhostClyde : Ghost
         float distance = getDistance(transform.position,movPacMan.gameObject.transform.position);
         if(distance > 8)
         {
-            Debug.Log("cambia la perra: "+distance);
             ChangedState(GhostState.Chasing);
         }
     }

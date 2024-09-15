@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Asegurar que los archivos C# se reconozcan como C#
+*.cs linguist-language=C#
+# Ignorar archivos de ShaderLab para que no influyan en la detección
+*.shader linguist-language=ShaderLab

@@ -9,7 +9,7 @@ public class Ghost : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] protected float timeWaiting,timeMaxScatter,timeMaxChasing;
     [SerializeField] protected SpriteRenderer render;
-    protected Node currentNode,nextNode,startNode,endNode; // buclean entre estos dos al principio 
+    protected Node currentNode,nextNode,houseNode,startNode,endNode; // buclean entre estos dos al principio 
     protected MovPacMan movPacMan;
     protected Vector2 targetVector;
     protected Vector2 direction = Vector2.zero;
@@ -25,7 +25,8 @@ public class Ghost : MonoBehaviour
     {
         Chasing,      // Persecución del jugador
         Frightened,   // Estado asustado (evita al jugador)
-        Scatter       // Dispersión (se mueve a una esquina o área específica)
+        Scatter,       // Dispersión (se mueve a una esquina o área específica y cicla en un recorrido)
+        Death          // cuando muere y tiene que regresar a la casa     
     }
     
     protected GhostState currentState;
@@ -269,21 +270,12 @@ public class Ghost : MonoBehaviour
     private IEnumerator goPosInteger()
     {        
         if(currentState == GhostState.Frightened)
-        {
-            float distanceNextNode = getDistance(nextNode.transform.position,movPacMan.transform.position);
-            float distanceCurrentNode = getDistance(currentNode.transform.position,movPacMan.transform.position);
-            if(distanceNextNode < distanceCurrentNode)
-                nextNode = currentNode;
-        }
+            changedNextNode(nextNode.transform.position,movPacMan.transform.position);
         else if(currentState == GhostState.Scatter)
-        {
-            float distanceNextNode = getDistance(nextNode.transform.position,patrolPath[0].transform.position);
-            float distanceCurrentNode = getDistance(currentNode.transform.position,patrolPath[0].transform.position);
-            
-            if(distanceNextNode < distanceCurrentNode)
-                nextNode = currentNode;
-        }
-
+            changedNextNode(nextNode.transform.position,patrolPath[0].transform.position);
+        else if(currentState == GhostState.Death)
+            changedNextNode(nextNode.transform.position,houseNode.transform.position);
+    
         while (HasReachedDestination(nextNode.transform.position))
         {
             Move(nextNode.transform.position);
@@ -306,6 +298,14 @@ public class Ghost : MonoBehaviour
         OnStateChanged();
     }
 
+    protected void changedNextNode(Vector2 posNextNode,Vector2 target)
+    {    
+        float distanceNextNode = getDistance(posNextNode,target);
+        float distanceCurrentNode = getDistance(currentNode.transform.position,target);
+        if(distanceNextNode < distanceCurrentNode)
+            nextNode = currentNode; 
+    }
+
     private void OnStateChanged()
     {
         switch (currentState)
@@ -318,6 +318,9 @@ public class Ghost : MonoBehaviour
                 break;
             case GhostState.Scatter:
                 currentRutine = StartCoroutine(Scatter());
+                break;
+            case GhostState.Death:
+                currentRutine = StartCoroutine(returnHouse());
                 break;
         }
     }
@@ -341,7 +344,7 @@ public class Ghost : MonoBehaviour
                     continue; 
             }
             
-            float distance = getDistance(neightbor.gameObject.transform.localPosition,targetVector);
+            float distance = getDistance(neightbor.gameObject.transform.position,targetVector);
 
             if(distance < minimalDistance)
             {
@@ -352,7 +355,6 @@ public class Ghost : MonoBehaviour
         }
 
         direction = directionAux;
-
         return idealNode;
     }
 
@@ -360,50 +362,100 @@ public class Ghost : MonoBehaviour
     {
         if(active)
         {
-            render.color = Color.blue;
-            if(!inGhostHouse)
-                ChangedState(GhostState.Frightened);
-            else
-                currentState = GhostState.Frightened;
-            speed = speed / 2f;
+            if(currentState != GhostState.Frightened && currentState !=  GhostState.Death)
+            {
+                render.color = Color.blue;
+                if(!inGhostHouse)
+                    ChangedState(GhostState.Frightened);
+                else
+                    currentState = GhostState.Frightened;
+                speed = speed / 2f;
+            }
         }
         else
         {
-            GhostState previousState = currentState;
-            OnReachedDestination?.Invoke();
-            render.color = originalColor;
-            if(previousState == currentState) // el maldito clyde puede cambiar antes a chasing, lo invocaría dos veces
+            if(currentState == GhostState.Frightened)
+            {
+                OnReachedDestination?.Invoke();
+                render.color = originalColor;
                 ChangedState(GhostState.Chasing);
-            speed = speed * 2f;
+                speed = speed * 2f;
+            }
         }
     }
 
     public void deathGhost()
     {
+        speed = speed * 4f;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        
         if(currentRutine != null)
             StopCoroutine(currentRutine);
         
-        speed = speed * 4f;
         render.color = originalColor;
+        targetVector = houseNode.transform.position; 
+        ChangedState(GhostState.Death);
+    }
 
+    private IEnumerator returnHouse()
+    {
+        while(HasReachedDestination(houseNode.transform.position))
+        {
+            nextNode = calculateNextNode(false);
+        
+            while(HasReachedDestination(nextNode.transform.position))
+            {
+                Move(nextNode.transform.position);
+                yield return null;
+            }
+
+            transform.position = nextNode.transform.position;
+            currentNode = nextNode;
+        }
+
+        targetVector = (Vector2) transform.position + 2*Vector2.down;
+
+        while(HasReachedDestination(targetVector))
+        {
+            Move(targetVector);
+            yield return null;
+        }
+
+        transform.position = targetVector;
+
+        speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
+
+        targetVector = houseNode.transform.position;
+        
+        while(HasReachedDestination(targetVector))
+        {
+            Move(targetVector);
+            yield return null;
+        }
+
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        ChangedState(GhostState.Scatter);
     }
 
     protected float getDistance(Vector2 pos,Vector2 target)
     {
         float dx = Mathf.Abs(pos.x - target.x);
         float dy =  Mathf.Abs(pos.y - target.y);
-            
-        return  dx + dy;
+        return  Mathf.Sqrt(dx*dx + dy*dy);
     }
+
+    public GhostState getGhostState() => currentState;
+    public void setCurrentNode() => currentNode = startNode;
 
     // tiene que parar todas las rutinas por si algun fantasma aún está en la casa, si es el caso hay dos rutinas corriendo
     public void stopStates() => StopAllCoroutines();
 
-    public void setParametrerInitial(Node ini,Node[] patrolPath)
+    public void setParametrerInitial(Node ini,Node houseNode,Node[] patrolPath)
     {
         startNode = ini;
         currentNode = ini;
         this.patrolPath = patrolPath;
+        this.houseNode = houseNode;
     }
 
     private bool HasReachedDestination(Vector2 target) => Vector3.Distance(transform.position, target) > 0.1f;

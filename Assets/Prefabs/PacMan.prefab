@@ -100,8 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e557d0df38c87746be1e2d46d8907fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  gridGame: {fileID: 0}
+  speed: 6
 --- !u!61 &3919039776460701825
 BoxCollider2D:
   m_ObjectHideFlags: 0

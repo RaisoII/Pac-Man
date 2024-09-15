@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 1230256187}
   - component: {fileID: 1230256186}
   m_Layer: 5
-  m_Name: interface
+  m_Name: interfaceMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -708,7 +708,7 @@ GameObject:
   - component: {fileID: 1487634345}
   - component: {fileID: 1487634344}
   m_Layer: 5
-  m_Name: panelBotones
+  m_Name: panelGeneral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
