@@ -227,8 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 621279096}
-  gameInterface: {fileID: 691800143}
-  panelFinishLevel: {fileID: 727620621}
+  panelFinishLevel: {fileID: 0}
   lifes:
   - {fileID: 953204532}
   - {fileID: 2019246972}
@@ -3407,7 +3406,7 @@ GameObject:
   - component: {fileID: 727620624}
   - component: {fileID: 727620623}
   m_Layer: 5
-  m_Name: panelFinishLevel
+  m_Name: panelGameOver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8456,9 +8455,9 @@ MonoBehaviour:
   nodePinky: {fileID: 1811255491}
   houseNode: {fileID: 994793986}
   prefabPacMan: {fileID: 2252246745275898981, guid: 89535b19fdbe1d54aa716d657d2f9a44, type: 3}
-  prefabBlinky: {fileID: 0}
+  prefabBlinky: {fileID: 2535531929531381989, guid: 8d7edb7ffacd5ed4f89b4055b3650cb0, type: 3}
   prefabInky: {fileID: 0}
-  prefabClyde: {fileID: 7161458518150836812, guid: 6a367076f3db89f44bbc7aaf48a7b783, type: 3}
+  prefabClyde: {fileID: 0}
   prefabPinky: {fileID: 0}
   patrolPathBlinky:
   - {fileID: 1019268085}

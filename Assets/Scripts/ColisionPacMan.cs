@@ -26,10 +26,9 @@ public class ColisionPacMan : MonoBehaviour
         }
         else if(col.CompareTag("Ghost"))
         {
-            if(levelManager.getIsfrightenedTime())
-            {
-                Destroy(col.gameObject);
-            }
+            Ghost ghost = col.gameObject.GetComponent<Ghost>();
+            if(ghost.getGhostState() == Ghost.GhostState.Frightened)
+                col.gameObject.GetComponent<Ghost>().deathGhost();
             else
                 levelManager.deathPacMan();
         }

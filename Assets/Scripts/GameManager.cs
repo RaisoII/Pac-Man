@@ -8,11 +8,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI score;
-    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gameInterface;
+    [SerializeField] private GameObject panelFinishLevel;
     [SerializeField] private GameObject [] lifes;
-    private LevelManager levelManager;
     private int cantDeaths;
     private static GameManager instance;
+    private int currentLevel;
 
     private void Awake()
     {
@@ -21,29 +22,47 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // Evita que el GameObject se destruya al cambiar de escena
+             // Verificamos si hay otra instancia de gameInterface ya en DontDestroyOnLoad
+            DontDestroyOnLoad(gameInterface);
         }
         else
             Destroy(gameObject); // Destruye cualquier duplicado que se cree
+        
+        currentLevel = 1;
     }
 
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        searchLevelManager(); 
         cantDeaths = 0;
     }
 
-     // Método que se llama cada vez que se carga una nueva escena
+     // Método que se llama cada vez que se carga una nueva escena (por ahora no le doy uso)
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        searchLevelManager();
-        Debug.Log("entra OnScene");
+        GameObject[] gameInterfaces = FindObjectsByName("interface");
+        
+        foreach(GameObject inter in gameInterfaces)
+        {
+            if(gameInterface != inter)
+                Destroy(inter);
+        }
     }
-    
 
-    private void searchLevelManager()
+    GameObject[] FindObjectsByName(string name)
     {
-        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        List<GameObject> objectsWithName = new List<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name == name)
+            {
+                objectsWithName.Add(obj);
+            }
+        }
+
+        return objectsWithName.ToArray();
     }
 
     private IEnumerator returnMenu()
@@ -67,9 +86,39 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             continueGame = false;
-            gameOverPanel.SetActive(true);
+            panelFinishLevel.SetActive(true);
+            panelFinishLevel.transform.GetChild(0).gameObject.SetActive(true);
             StartCoroutine(returnMenu());
         }
         return continueGame;
+    }
+
+    public void nextLevel()
+    {
+        currentLevel++;
+        string nameNextEscene = "Level"+currentLevel;
+
+        panelFinishLevel.SetActive(true);
+
+        if (Application.CanStreamedLevelBeLoaded(nameNextEscene))
+            panelFinishLevel.transform.GetChild(1).gameObject.SetActive(true);
+        else
+        {
+            nameNextEscene = "Menu";
+            panelFinishLevel.transform.GetChild(2).gameObject.SetActive(true);
+        }
+
+        StartCoroutine(nextLevelRutine(nameNextEscene));
+    }
+
+    private IEnumerator nextLevelRutine(string nextScene)
+    {
+        yield return new WaitForSeconds(3f);
+        panelFinishLevel.SetActive(false);
+        
+        foreach(Transform children in panelFinishLevel.transform)
+            children.gameObject.SetActive(false);
+
+        SceneManager.LoadScene(nextScene);
     }
 }

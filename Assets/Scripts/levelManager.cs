@@ -15,6 +15,9 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        GameObject[] pactDotsArray = GameObject.FindGameObjectsWithTag("pacDots");
+        cantPacDots = pactDotsArray.Length - 1;
+
         spawn = gameObject.GetComponent<SpawnerManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawn.instantiatePrefabs();
@@ -36,6 +39,10 @@ public class LevelManager : MonoBehaviour
     public void resetPositions()
     {
         spawn.resetPositions();
+        foreach(Ghost ghost in ghostArray)
+            ghost.setCurrentNode();
+        
+        movPac.resetPositionAndDirection();
     }
 
     private IEnumerator startGame()
@@ -53,17 +60,19 @@ public class LevelManager : MonoBehaviour
     {
         cantPacDots--;
         if(cantPacDots == 0)
-            Debug.Log("ganaste pa");
-        
+        {
+            gameManager.nextLevel();
+            enabledMovementPrefabs(false);
+        }
+            
         if(activeFrightened)
         {
-            if(frightenedRutine == null)
-            {
-                foreach(Ghost ghost in ghostArray)
-                    ghost.ChangedStateFrightened(true);
+            // está fuera porque hay fantasmas que pueden estar escapando y otros en la ghostHouse o en dispersión
+            foreach(Ghost ghost in ghostArray) 
+                ghost.ChangedStateFrightened(true);
 
+            if(frightenedRutine == null)
                 frightenedRutine = StartCoroutine(frightenedTime());
-            }
             else 
                 timeFrightenedRutineAux += timeFrightenedRutine; 
         }
@@ -94,19 +103,21 @@ public class LevelManager : MonoBehaviour
     }
 
     public void deathPacMan()
-    {
-        foreach(Ghost g in ghostArray)
-        {
-            g.stopStates();
-            g.enabled = false;
-        }
-        movPac.enabled = false;
-        
+    { 
+        enabledMovementPrefabs(false);
         bool continueGame =  gameManager.removeOneLive();
 
         if(continueGame)    
             StartCoroutine(restartGame());
     }
 
-    public bool getIsfrightenedTime() => frightenedRutine != null;
+    private void enabledMovementPrefabs(bool value)
+    {
+        foreach(Ghost g in ghostArray)
+        {
+            g.stopStates();
+            g.enabled = value;
+        }
+        movPac.enabled = value;
+    }
 }

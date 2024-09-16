@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour
 {
-    [SerializeField] private Node nodePacMan, nodeBlinky,nodeInky,nodeClyde,nodePinky;
+    [SerializeField] private Node nodePacMan, nodeBlinky,nodeInky,nodeClyde,nodePinky,houseNode;
     [SerializeField] GameObject prefabPacMan,prefabBlinky,prefabInky,prefabClyde,prefabPinky;
     private GameObject PacMan,Blinky,Inky,Clyde,Pinky;
     [SerializeField] private Node[] patrolPathBlinky,patrolPathInky,patrolPathClyde,patrolPathPinky;
@@ -58,7 +58,7 @@ public class SpawnerManager : MonoBehaviour
     private void instantiateNodes(GameObject ghostPrefab,Node initialNode,Node[] patrolPath)
     {
         Ghost ghost = ghostPrefab.GetComponent<Ghost>();
-        ghost.setParametrerInitial(initialNode,patrolPath);
+        ghost.setParametrerInitial(initialNode,houseNode,patrolPath);
         ghost.setPacman(PacMan);
     }
 

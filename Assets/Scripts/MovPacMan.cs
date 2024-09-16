@@ -8,12 +8,10 @@ public class MovPacMan : MonoBehaviour
     [SerializeField] private float speed;
     private Vector2 direction;
     private Vector2 nextDirection;
-    private Node currentNode,previousNode,targetNode;
+    private Node startNode,currentNode,previousNode,targetNode;
     // Start is called before the first frame update
     void Start()
     {
-        GameObject scripts = GameObject.Find("GeneralScripts");
-    
         direction = Vector2.left;
         changedPosition(direction);
     }
@@ -116,11 +114,17 @@ public class MovPacMan : MonoBehaviour
         }
     }
 
-    bool onTarget()
+    private bool onTarget()
     {
         float nodeTarget = distanceForNode(targetNode.transform.position);
         float nodeToSelf = distanceForNode(transform.localPosition);
         return nodeToSelf > nodeTarget;
+    }
+
+    // llamado cuando pierde una vida
+    public void resetMov()
+    {
+
     }
 
     private float distanceForNode(Vector2 targetPosition)
@@ -128,8 +132,19 @@ public class MovPacMan : MonoBehaviour
         Vector2 dif = targetPosition - (Vector2)previousNode.transform.position;
         return dif.sqrMagnitude;
     }
-    public void setNodeIni(Node ini) => currentNode = ini;
+    public void setNodeIni(Node ini)
+    {
+        currentNode = ini;
+        startNode = ini;
+    } 
+
+    public void resetPositionAndDirection()
+    {
+        currentNode = startNode;
+        targetNode = currentNode;
+        direction = Vector2.left;
+        changedPosition(direction);
+    }
 
     public Vector2 getDirection() => direction;
-
 }
