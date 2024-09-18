@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameInterface;
     [SerializeField] private GameObject panelFinishLevel;
     [SerializeField] private GameObject [] lifes;
+    [SerializeField] private PowerManagerPacMan powerManager;
     private int cantDeaths;
     private static GameManager instance;
     private int currentLevel;
@@ -40,12 +41,17 @@ public class GameManager : MonoBehaviour
      // Método que se llama cada vez que se carga una nueva escena (por ahora no le doy uso)
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameObject[] gameInterfaces = FindObjectsByName("interface");
-        
-        foreach(GameObject inter in gameInterfaces)
+        if (scene.name.Contains("Level"))
         {
-            if(gameInterface != inter)
-                Destroy(inter);
+            GameObject[] gameInterfaces = FindObjectsByName("interface");
+        
+            foreach(GameObject inter in gameInterfaces)
+            {
+                if(gameInterface != inter)
+                    Destroy(inter);
+            }
+
+            powerManager.checkPower();
         }
     }
 
@@ -57,9 +63,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject obj in allObjects)
         {
             if (obj.name == name)
-            {
                 objectsWithName.Add(obj);
-            }
         }
 
         return objectsWithName.ToArray();
@@ -93,8 +97,13 @@ public class GameManager : MonoBehaviour
         return continueGame;
     }
 
+    public void startGame() => powerManager.checkTimeCoolDown();
+
+    public void stopGame() => powerManager.stopCoroutinesTimeCoolDown();
+
     public void nextLevel()
     {
+        stopGame();
         currentLevel++;
         string nameNextEscene = "Level"+currentLevel;
 

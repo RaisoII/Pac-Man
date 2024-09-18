@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnerManager : MonoBehaviour
 {
@@ -15,15 +16,21 @@ public class SpawnerManager : MonoBehaviour
     {
         PacMan = GameObject.FindGameObjectWithTag("PacMan");
         
+        // si es nulo estoy en el primer nivel
         if(PacMan == null)
         {
             PacMan = Instantiate(prefabPacMan,nodePacMan.transform.position,Quaternion.identity);
-            PacMan.GetComponent<MovPacMan>().setNodeIni(nodePacMan);
-        } 
+            DontDestroyOnLoad(PacMan);
+        }
+        else 
+            PacMan.transform.position = nodePacMan.transform.position;
+        
+        PacMan.GetComponent<MovPacMan>().setNodeIni(nodePacMan);
+        PacMan.GetComponent<MovPacMan>().resetPositionAndDirection();
+        
         
         listGhost = new List<GameObject>();
-        
-
+    
         if(prefabBlinky != null)
         {
             Blinky = Instantiate(prefabBlinky,nodeBlinky.transform.position,Quaternion.identity);

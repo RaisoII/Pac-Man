@@ -32,6 +32,8 @@ public class LevelManager : MonoBehaviour
         }
 
         movPac = spawn.getPacMan().GetComponent<MovPacMan>();
+        ColisionPacMan colPac = spawn.getPacMan().GetComponent<ColisionPacMan>();
+        colPac.setLevelManager(this);
 
         StartCoroutine(startGame());
     }
@@ -55,6 +57,9 @@ public class LevelManager : MonoBehaviour
         }
         
         movPac.enabled = true;
+        movPac.startMove();
+
+        gameManager.startGame();
     }
     public void deletePacDot(bool activeFrightened)
     {
@@ -97,6 +102,8 @@ public class LevelManager : MonoBehaviour
     
     private IEnumerator restartGame()
     {
+        
+        gameManager.stopGame();
         yield return new WaitForSeconds(3);
         resetPositions();
         StartCoroutine(startGame());

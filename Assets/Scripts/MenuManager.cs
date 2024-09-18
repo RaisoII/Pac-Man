@@ -9,12 +9,16 @@ public class MenuManager : MonoBehaviour
     {
         GameObject gameManager = GameObject.Find("GameManager");
         GameObject inter = GameObject.Find("interface");
+        GameObject pacMan = GameObject.FindWithTag("PacMan");
         
         if(gameManager != null)
             Destroy(gameManager);
             
         if(inter != null)
             Destroy(inter);
+        
+        if(pacMan != null)
+            Destroy(pacMan);
     }
     public void listenerPlay()
     {

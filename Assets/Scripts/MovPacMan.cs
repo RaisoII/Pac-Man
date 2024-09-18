@@ -13,7 +13,7 @@ public class MovPacMan : MonoBehaviour
     void Start()
     {
         direction = Vector2.left;
-        changedPosition(direction);
+        //changedPosition(direction);
     }
 
     // Update is called once per frame
@@ -143,8 +143,10 @@ public class MovPacMan : MonoBehaviour
         currentNode = startNode;
         targetNode = currentNode;
         direction = Vector2.left;
-        changedPosition(direction);
+        nextDirection = Vector2.left;
     }
+
+    public void startMove() => changedPosition(direction);
 
     public Vector2 getDirection() => direction;
 }

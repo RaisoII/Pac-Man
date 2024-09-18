@@ -6,16 +6,9 @@ public class ColisionPacMan : MonoBehaviour
 {
     private GameManager gameManager;
     private LevelManager levelManager;
-
-    private void Start()
-    {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
-    private void OnEnable()
-    {
-        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-    }
     
+    public void setLevelManager(LevelManager level) => levelManager = level; 
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.CompareTag("pacDots"))
