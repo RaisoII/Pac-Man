@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     private int cantDeaths;
     private static GameManager instance;
     private int currentLevel;
+    public int cantTimeFrightened; // se suma
+    public float cantSpeedPacman; // se suma
+    public float cantSpeedGhost; //se resta;
 
     private void Awake()
     {

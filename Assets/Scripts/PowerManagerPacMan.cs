@@ -9,13 +9,14 @@ public class PowerManagerPacMan : MonoBehaviour
     [SerializeField] private ManagerKeys managerKeys;
     [SerializeField] private Image coolDownFirstImage,coolDownSecondImage,coolDownThirdImage;
     private Dictionary<int,Power> dictionaryPower;
-    private float timeFirstPower,timeSecondPower,timeThirdPower;
-    private float timeFirstPowerAux,timeSecondPowerAux,timeThirdPowerAux;
+    private float timeCoolDownFirstPower,timeCoolDownSecondPower,timeCoolDownThirdPower;
+    private float timeCoolDownFirstPowerAux,timeCoolDownSecondPowerAux,timeCoolDownThirdPowerAux;
+    private float timeDurationFirstPower,timeDurationSecondPower,timeDurationThirdPower;
 
     private void Start()
     {
-        timeFirstPower = timeSecondPower = timeThirdPower = 0;
-        timeFirstPowerAux = timeSecondPowerAux = timeThirdPowerAux = 0; 
+        timeCoolDownFirstPower = timeCoolDownSecondPower = timeCoolDownThirdPower = 0;
+        timeCoolDownFirstPowerAux = timeCoolDownSecondPowerAux = timeCoolDownThirdPowerAux = 0; 
         
         dictionaryPower = new Dictionary<int,Power>();
         //setPower(p1,0);
@@ -25,6 +26,13 @@ public class PowerManagerPacMan : MonoBehaviour
     }
     public void setPower(Power p, int pos)
     {
+        if(dictionaryPower.ContainsKey(pos))
+        {
+            Debug.Log("ála entra ostiaa");
+            dictionaryPower.Remove(pos);
+
+        }
+
         dictionaryPower.Add(pos,p);
 
         KeyCode key = KeyCode.Alpha0;
@@ -32,20 +40,24 @@ public class PowerManagerPacMan : MonoBehaviour
         if(pos == 0)
         {
             key = KeyCode.Z;
-            timeFirstPower = p.getTimeCoolDown();
-            timeFirstPowerAux = timeFirstPower;
+            timeCoolDownFirstPower = p.getTimeCoolDown();
+            timeDurationFirstPower = p.getTimeDuration();
+            timeCoolDownFirstPowerAux = timeCoolDownFirstPower;
+
         }
         else if(pos == 1)
         {
             key = KeyCode.X;
-            timeSecondPower = p.getTimeCoolDown();
-            timeSecondPowerAux = timeSecondPower;
+            timeCoolDownSecondPower = p.getTimeCoolDown();
+            timeDurationSecondPower = p.getTimeDuration();
+            timeCoolDownSecondPowerAux = timeCoolDownSecondPower;
         }
         else if(pos == 2)
         {
             key = KeyCode.C;
-            timeThirdPower = p.getTimeCoolDown();
-            timeThirdPowerAux = timeThirdPower;
+            timeCoolDownThirdPower = p.getTimeCoolDown();
+            timeDurationThirdPower = p.getTimeDuration();
+            timeCoolDownThirdPowerAux = timeCoolDownThirdPower;
         }
 
         managerKeys.setKeyPower(key);
@@ -70,13 +82,13 @@ public class PowerManagerPacMan : MonoBehaviour
 
     public void checkTimeCoolDown()
     {
-        if(timeFirstPowerAux > 0)
+        if(timeCoolDownFirstPowerAux > 0)
             startTimeCoolDown(KeyCode.Z);
         
-        if(timeSecondPowerAux > 0)
+        if(timeCoolDownSecondPowerAux > 0)
             startTimeCoolDown(KeyCode.X);
             
-        if(timeThirdPowerAux > 0)
+        if(timeCoolDownThirdPowerAux > 0)
             startTimeCoolDown(KeyCode.C);
     
     }
@@ -85,11 +97,11 @@ public class PowerManagerPacMan : MonoBehaviour
     {
         float timeAux = 0;
         if(key == KeyCode.Z)
-            timeAux = timeFirstPowerAux;
+            timeAux = timeCoolDownFirstPowerAux;
         else if(key == KeyCode.X)
-            timeAux = timeSecondPowerAux;
+            timeAux = timeCoolDownSecondPowerAux;
         else if(key == KeyCode.C)
-            timeAux = timeThirdPowerAux;
+            timeAux = timeCoolDownThirdPowerAux;
 
         return timeAux == 0;
     }
@@ -99,17 +111,17 @@ public class PowerManagerPacMan : MonoBehaviour
         if(key == KeyCode.Z)
         {
             dictionaryPower[0].Activate();
-            timeFirstPowerAux = timeFirstPower;
+            timeCoolDownFirstPowerAux = timeCoolDownFirstPower;
         }
         else if(key == KeyCode.X)
         {
             dictionaryPower[1].Activate();
-            timeSecondPowerAux = timeSecondPower;
+            timeCoolDownSecondPowerAux = timeCoolDownSecondPower;
         }
         else if(key == KeyCode.C)
         {
             dictionaryPower[2].Activate();
-            timeThirdPowerAux = timeThirdPower;
+            timeCoolDownThirdPowerAux = timeCoolDownThirdPower;
         }
     }
 
@@ -119,18 +131,18 @@ public class PowerManagerPacMan : MonoBehaviour
     {
         if (key == KeyCode.Z)
         {
-            StartCoroutine(timeCoolDownRutine(() => timeFirstPowerAux, value => timeFirstPowerAux = value,
-                                                timeFirstPower,coolDownFirstImage));
+            StartCoroutine(timeCoolDownRutine(() => timeCoolDownFirstPowerAux, value => timeCoolDownFirstPowerAux = value,
+                                                timeCoolDownFirstPower,coolDownFirstImage));
         }
         else if (key == KeyCode.X)
         {
-            StartCoroutine(timeCoolDownRutine(() => timeSecondPowerAux, value => timeSecondPowerAux = value,
-                                                timeSecondPower,coolDownSecondImage));
+            StartCoroutine(timeCoolDownRutine(() => timeCoolDownSecondPowerAux, value => timeCoolDownSecondPowerAux = value,
+                                                timeCoolDownSecondPower,coolDownSecondImage));
         }
         else if (key == KeyCode.C)
         {
-            StartCoroutine(timeCoolDownRutine(() => timeThirdPowerAux, value => timeThirdPowerAux = value,
-                                                timeThirdPower,coolDownThirdImage));
+            StartCoroutine(timeCoolDownRutine(() => timeCoolDownThirdPowerAux, value => timeCoolDownThirdPowerAux = value,
+                                                timeCoolDownThirdPower,coolDownThirdImage));
         }
     }
 
@@ -142,6 +154,26 @@ public class PowerManagerPacMan : MonoBehaviour
             setTime(getTime() - 1); // Reduce el tiempo en 1 segundo y lo actualiza
             imageCoolDown.fillAmount = getTime() / coolDownTime;
         }
+    }
+
+    public void incrementTimePower(int cant, int pos)
+    {
+        if(pos == 0)
+            timeDurationFirstPower += cant;
+        else if(pos == 1)
+            timeDurationSecondPower += cant;
+        else if(pos == 2)
+            timeDurationThirdPower += cant;
+    }
+
+    public void reduceTimeCoolDownPower(float cant, int pos)
+    {
+        if(pos == 0)
+            timeCoolDownFirstPower -= cant;
+        else if(pos == 1)
+            timeCoolDownSecondPower -= cant;
+        else if(pos == 2)
+            timeCoolDownThirdPower -= cant;
     }
 
     public Dictionary<int,Power> getPowers() => dictionaryPower;

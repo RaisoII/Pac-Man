@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class selectorPower : MonoBehaviour
 {
+    [SerializeField] private GeneratorPowers generatorPowers;
+    [SerializeField] private GameObject[] newPowerContainer;
     [SerializeField] private GameObject[] powerContainer;
     [SerializeField] private GameObject powerDescription;
     [SerializeField] private TextMeshProUGUI textDescription;
@@ -13,13 +15,16 @@ public class selectorPower : MonoBehaviour
     [SerializeField] private float sizeContainer;
     [SerializeField] private float colorValue;
     private GameObject currentContainer;
+    private GameObject[] currentArrayContainer;
     private GameObject previousContainer;
     private int indexContainer;
+    private InterfaceIcon currentIcon;
 
     private void Start()
     {
         indexContainer = 0;
-        currentContainer = powerContainer[0];
+        currentArrayContainer = newPowerContainer;
+        currentContainer = newPowerContainer[0];
         focusContainer();
     }
 
@@ -30,12 +35,21 @@ public class selectorPower : MonoBehaviour
 
     private void checkKeys()
     {
-        int value = 0;
         if(Input.GetKeyDown(KeyCode.LeftArrow))
-            value = -1;
+            selectContainer(-1);
         else if(Input.GetKeyDown(KeyCode.RightArrow))
-            value = 1;
-        selectContainer(value);
+            selectContainer(1);
+        else if(Input.GetKeyDown(KeyCode.Return))
+            checkEnter();
+        
+    }
+
+    private void checkEnter()
+    {
+        if(currentArrayContainer == newPowerContainer)
+        {
+            currentIcon.aplyEffect(indexContainer);
+        }
     }
 
     private void selectContainer(int value)
@@ -45,11 +59,11 @@ public class selectorPower : MonoBehaviour
 
         indexContainer += value;
         if(indexContainer == -1)
-            indexContainer = powerContainer.Length - 1;
-        else if(indexContainer == powerContainer.Length)
+            indexContainer = currentArrayContainer.Length - 1;
+        else if(indexContainer == currentArrayContainer.Length)
             indexContainer = 0;
         
-        currentContainer = powerContainer[indexContainer];
+        currentContainer = currentArrayContainer[indexContainer];
         focusContainer();
     }
 
@@ -93,5 +107,8 @@ public class selectorPower : MonoBehaviour
                                                         rectCurrent.anchoredPosition.y + displacementText);
         
         previousContainer = currentContainer;
+
+        currentIcon = generatorPowers.getInterfaceIcon(indexContainer);
+        textDescription.text ="     "+currentIcon.getName +"\n\n"+currentIcon.getDescription;
     }
 }
