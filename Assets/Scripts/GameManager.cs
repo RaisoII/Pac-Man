@@ -110,7 +110,10 @@ public class GameManager : MonoBehaviour
         panelFinishLevel.SetActive(true);
 
         if (Application.CanStreamedLevelBeLoaded(nameNextEscene))
+        {
             panelFinishLevel.transform.GetChild(1).gameObject.SetActive(true);
+            nameNextEscene = "seleccionarPowerUp";
+        }
         else
         {
             nameNextEscene = "Menu";

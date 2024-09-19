@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Power : MonoBehaviour
+[CreateAssetMenu(fileName = "NuevoPoder", menuName = "Poder")]
+public class Power : ScriptableObject 
 {
+
     public string namePower;
     public float duration;
     public float cooldown;
-
-    public Power(string namePower, float duration, float cooldown)
-    {
-        this.namePower = namePower;
-        this.duration = duration;
-        this.cooldown = cooldown;
-    }
+    public Sprite icon;
+    public string description;
+    public GameObject prefab;
 
     public void powerUp()
     {

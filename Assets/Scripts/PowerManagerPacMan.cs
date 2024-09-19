@@ -18,12 +18,9 @@ public class PowerManagerPacMan : MonoBehaviour
         timeFirstPowerAux = timeSecondPowerAux = timeThirdPowerAux = 0; 
         
         dictionaryPower = new Dictionary<int,Power>();
-        Power p1 = new Power("iman",10,20);
-        Power p2 = new Power("fuego",7,40);
-        Power p3 = new Power("fantasma",7,10);
         //setPower(p1,0);
         //setPower(p2,1);
-        setPower(p3,2);
+        //setPower(p3,2);
         checkPower();
     }
     public void setPower(Power p, int pos)
@@ -146,4 +143,6 @@ public class PowerManagerPacMan : MonoBehaviour
             imageCoolDown.fillAmount = getTime() / coolDownTime;
         }
     }
+
+    public Dictionary<int,Power> getPowers() => dictionaryPower;
 }
