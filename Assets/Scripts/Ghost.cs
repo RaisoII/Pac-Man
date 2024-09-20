@@ -7,9 +7,9 @@ using System.Linq;
 public class Ghost : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] protected float timeWaiting,timeMaxScatter,timeMaxChasing;
+    [SerializeField] protected float timeWaiting, timeMaxScatter, timeMaxChasing;
     [SerializeField] protected SpriteRenderer render;
-    protected Node currentNode,nextNode,houseNode,startNode,endNode; // buclean entre estos dos al principio 
+    protected Node currentNode, nextNode, houseNode, startNode, endNode; // buclean entre estos dos al principio 
     protected MovPacMan movPacMan;
     protected Vector2 targetVector;
     protected Vector2 direction = Vector2.zero;
@@ -19,7 +19,7 @@ public class Ghost : MonoBehaviour
     protected Coroutine currentRutine;
     protected Color originalColor;
     protected bool inGhostHouse;
-    public event Action OnReachedDestination,checkDistancePacMan;
+    public event Action OnReachedDestination, checkDistancePacMan;
 
     public enum GhostState
     {
@@ -28,13 +28,13 @@ public class Ghost : MonoBehaviour
         Scatter,       // Dispersión (se mueve a una esquina o área específica y cicla en un recorrido)
         Death          // cuando muere y tiene que regresar a la casa     
     }
-    
+
     protected GhostState currentState;
 
     // por ahora solo para desactivar el script
     private void Start()
     {
-        
+
     }
     protected virtual void Awake()
     {
@@ -47,7 +47,7 @@ public class Ghost : MonoBehaviour
     {
         endNode = startNode.getNeightbor(Vector2.up);
         StartCoroutine(WaitingHouse());
-    } 
+    }
 
     protected void Move(Vector3 targetPosition)
     {
@@ -57,27 +57,27 @@ public class Ghost : MonoBehaviour
     protected virtual IEnumerator Chase()
     {
         float time = 0;
-        while(time < timeMaxChasing)
+        while (time < timeMaxChasing)
         {
             nextNode = calculateNextNode(true);
-            while(HasReachedDestination(nextNode.transform.position))
+            while (HasReachedDestination(nextNode.transform.position))
             {
                 Move(nextNode.transform.position);
-                time += Time.deltaTime; 
+                time += Time.deltaTime;
                 yield return null;
             }
 
             transform.localPosition = nextNode.transform.position;
             Node portalNode = nextNode.getPortalNode();
-            
-            if(portalNode != null)
+
+            if (portalNode != null)
             {
                 transform.position = portalNode.transform.position;
                 currentNode = portalNode;
             }
             else
                 currentNode = nextNode;
-            
+
             OnReachedDestination?.Invoke();
         }
 
@@ -85,19 +85,19 @@ public class Ghost : MonoBehaviour
     }
 
     //comportamiento dispersión
-    protected  IEnumerator Scatter()
+    protected IEnumerator Scatter()
     {
         // ir hacia el punto de la esquina
         targetVector = patrolPath[0].transform.position;
         float time = 0;
 
-        while(HasReachedDestination(targetVector) && time < timeMaxScatter)
+        while (HasReachedDestination(targetVector) && time < timeMaxScatter)
         {
             nextNode = calculateNextNode(false);
-            while(HasReachedDestination(nextNode.transform.position))
+            while (HasReachedDestination(nextNode.transform.position))
             {
                 Move(nextNode.transform.position);
-                time += Time.deltaTime; 
+                time += Time.deltaTime;
                 yield return null;
             }
             transform.localPosition = nextNode.transform.position;
@@ -107,14 +107,15 @@ public class Ghost : MonoBehaviour
         // bucle patrulla
 
         int i = 1;
-        
-        while(time < timeMaxScatter)
+
+        while (time < timeMaxScatter)
         {
             nextNode = patrolPath[i];
-            while(HasReachedDestination(nextNode.transform.position))
+            direction = ((Vector2)nextNode.transform.position - (Vector2)transform.position).normalized;
+            while (HasReachedDestination(nextNode.transform.position))
             {
                 Move(nextNode.transform.position);
-                time += Time.deltaTime; 
+                time += Time.deltaTime;
                 yield return null;
             }
 
@@ -123,8 +124,8 @@ public class Ghost : MonoBehaviour
             checkDistancePacMan?.Invoke(); // para el maldito Clyde
             i++;
 
-            if(i == patrolPath.Length)
-                i =0;
+            if (i == patrolPath.Length)
+                i = 0;
         }
 
         OnReachedDestination?.Invoke();
@@ -133,42 +134,42 @@ public class Ghost : MonoBehaviour
 
     // Comportamiento común cuando el fantasma está asustado
     // es desactivada desde el manager porque no todos los fantasmas lo desactivan al mismo tiempo
-    protected  IEnumerator Frightened()
+    protected IEnumerator Frightened()
     {
-        while(true)
+        while (true)
         {
-            Node [] neightbors = currentNode.getNeightbors();
-            
+            Node[] neightbors = currentNode.getNeightbors();
+
             float minimalDistance = 0; // acá hay que tomar el mayor de las distancias
             Vector2 posPacMan = movPacMan.transform.position;
-            
+
             int intX = Mathf.RoundToInt(posPacMan.x);
-            int intY = Mathf.RoundToInt(posPacMan.y); 
-            posPacMan = new Vector2(intX,intY);
-            
+            int intY = Mathf.RoundToInt(posPacMan.y);
+            posPacMan = new Vector2(intX, intY);
+
             nextNode = null;
-            
-            foreach(Node neightbor in neightbors)
+
+            foreach (Node neightbor in neightbors)
             {
-                float distanceForPacMan = getDistance(posPacMan,neightbor.transform.localPosition);
-                if(distanceForPacMan > minimalDistance)
+                float distanceForPacMan = getDistance(posPacMan, neightbor.transform.localPosition);
+                if (distanceForPacMan > minimalDistance)
                 {
                     minimalDistance = distanceForPacMan;
-                    nextNode = neightbor; 
+                    nextNode = neightbor;
                 }
             }
 
-            while(HasReachedDestination(nextNode.transform.localPosition))
+            while (HasReachedDestination(nextNode.transform.localPosition))
             {
                 Move(nextNode.transform.localPosition);
                 yield return null;
             }
-            
+
             transform.position = nextNode.transform.position;
-            
+
             Node portalNode = nextNode.getPortalNode();
-            
-            if(portalNode != null)
+
+            if (portalNode != null)
             {
                 transform.position = portalNode.transform.position;
                 currentNode = portalNode;
@@ -177,7 +178,7 @@ public class Ghost : MonoBehaviour
                 currentNode = nextNode;
         }
     }
-    
+
     protected IEnumerator WaitingHouse()
     {
         inGhostHouse = true;
@@ -191,36 +192,41 @@ public class Ghost : MonoBehaviour
     {
         foreach (Node node in startPath)
         {
-            while(HasReachedDestination(node.transform.position))
+            direction = ((Vector2)node.transform.position - (Vector2)transform.position).normalized;
+
+            while (HasReachedDestination(node.transform.position))
             {
                 Move(node.transform.position);
-                yield return new WaitForEndOfFrame();   
+                yield return new WaitForEndOfFrame();
             }
+
             transform.position = node.transform.position;
         }
-        
+
         currentNode = startPath[startPath.Count - 1];
-        
-        if(currentState == GhostState.Frightened)
+
+        if (currentState == GhostState.Frightened)
             ChangedState(GhostState.Frightened);
         else
             ChangedState(GhostState.Scatter);
-        
+
         inGhostHouse = false;
     }
 
     protected IEnumerator WaitingPath()
     {
-        bool goingToEnd = true; 
-        
-        while (true) 
+        bool goingToEnd = true;
+
+        while (true)
         {
             Transform target;
-            if(goingToEnd)
+            if (goingToEnd)
                 target = endNode.transform;
             else
                 target = startNode.transform;
-            
+
+            direction = ((Vector2)target.position - (Vector2)transform.position).normalized;
+
             while (HasReachedDestination(target.transform.position))
             {
                 Move(target.transform.position);
@@ -233,31 +239,31 @@ public class Ghost : MonoBehaviour
 
     protected void ChangedState(GhostState newState)
     {
-        if(currentRutine != null)
+        if (currentRutine != null)
             StopCoroutine(currentRutine);
-        
+
         currentState = newState;
         currentRutine = StartCoroutine(waitingOneFrame());
     }
 
     private IEnumerator waitingOneFrame()
     {
-        for(int i =0 ; i < 2; i++)
+        for (int i = 0; i < 2; i++)
             yield return new WaitForEndOfFrame();
-        
+
         verifyStateChange();
     }
 
     protected void verifyStateChange()
     {
-        if(nextNode == null)
+        if (nextNode == null)
             OnStateChanged();
-        else if(!HasReachedDestination(nextNode.transform.position))
+        else if (!HasReachedDestination(nextNode.transform.position))
         {
             transform.position = nextNode.transform.position;
             OnStateChanged();
         }
-        else if(!HasReachedDestination(currentNode.transform.position))
+        else if (!HasReachedDestination(currentNode.transform.position))
         {
             transform.position = currentNode.transform.position;
             OnStateChanged();
@@ -268,24 +274,24 @@ public class Ghost : MonoBehaviour
 
     // paso intermedio para pasar entre estados cuadno no me encuentro en una pos exacta
     private IEnumerator goPosInteger()
-    {        
-        if(currentState == GhostState.Frightened)
-            changedNextNode(nextNode.transform.position,movPacMan.transform.position);
-        else if(currentState == GhostState.Scatter)
-            changedNextNode(nextNode.transform.position,patrolPath[0].transform.position);
-        else if(currentState == GhostState.Death)
-            changedNextNode(nextNode.transform.position,houseNode.transform.position);
-    
+    {
+        if (currentState == GhostState.Frightened)
+            changedNextNode(nextNode.transform.position, movPacMan.transform.position);
+        else if (currentState == GhostState.Scatter)
+            changedNextNode(nextNode.transform.position, patrolPath[0].transform.position);
+        else if (currentState == GhostState.Death)
+            changedNextNode(nextNode.transform.position, houseNode.transform.position);
+
         while (HasReachedDestination(nextNode.transform.position))
         {
             Move(nextNode.transform.position);
-            yield return null; 
+            yield return null;
         }
 
         transform.position = nextNode.transform.position;
-        
+
         Node portalNode = nextNode.getPortalNode();
-        if(portalNode != null)
+        if (portalNode != null)
         {
             transform.position = portalNode.transform.position;
             currentNode = portalNode;
@@ -294,16 +300,20 @@ public class Ghost : MonoBehaviour
             currentNode = nextNode;
 
         nextNode = null;
-    
+
         OnStateChanged();
     }
 
-    protected void changedNextNode(Vector2 posNextNode,Vector2 target)
-    {    
-        float distanceNextNode = getDistance(posNextNode,target);
-        float distanceCurrentNode = getDistance(currentNode.transform.position,target);
-        if(distanceNextNode < distanceCurrentNode)
-            nextNode = currentNode; 
+    protected void changedNextNode(Vector2 posNextNode, Vector2 target)
+    {
+        float distanceNextNode = getDistance(posNextNode, target);
+        float distanceCurrentNode = getDistance(currentNode.transform.position, target);
+        if (distanceNextNode < distanceCurrentNode)
+        {
+            nextNode = currentNode;
+            Vector2 dirAux = (Vector2)nextNode.transform.position - (Vector2)transform.position;
+            direction = dirAux.normalized;
+        }
     }
 
     private void OnStateChanged()
@@ -314,7 +324,7 @@ public class Ghost : MonoBehaviour
                 currentRutine = StartCoroutine(Chase());
                 break;
             case GhostState.Frightened:
-                currentRutine =  StartCoroutine(Frightened());
+                currentRutine = StartCoroutine(Frightened());
                 break;
             case GhostState.Scatter:
                 currentRutine = StartCoroutine(Scatter());
@@ -332,40 +342,44 @@ public class Ghost : MonoBehaviour
         float minimalDistance = float.MaxValue;
         Vector2 newDirection = Vector2.zero;
         Vector2 directionAux = direction;
-        
-        foreach(Node neightbor in neightbors)
+
+        foreach (Node neightbor in neightbors)
         {
-            if(equalsDirection)
+            Vector2 directionNode = currentNode.getDirectionNode(neightbor);
+
+            if (equalsDirection)
             {
-                Vector2 directionNode = currentNode.getDirectionNode(neightbor);
-                if(directionNode != -1*direction) // si la direccion del nodo es distinta a la direccion de la que vengo
+                if (directionNode != -1 * direction) // si la direccion del nodo es distinta a la direccion de la que vengo
                     newDirection = directionNode;
                 else
-                    continue; 
+                    continue;
             }
-            
-            float distance = getDistance(neightbor.gameObject.transform.position,targetVector);
+            else
+                newDirection = directionNode;
 
-            if(distance < minimalDistance)
+            float distance = getDistance(neightbor.gameObject.transform.position, targetVector);
+
+            if (distance < minimalDistance)
             {
                 directionAux = newDirection;
                 idealNode = neightbor;
-                minimalDistance = distance; 
+                minimalDistance = distance;
             }
         }
 
         direction = directionAux;
+        Debug.Log("puta direccion: " + direction);
         return idealNode;
     }
 
     public void ChangedStateFrightened(bool active)
     {
-        if(active)
+        if (active)
         {
-            if(currentState != GhostState.Frightened && currentState !=  GhostState.Death)
+            if (currentState != GhostState.Frightened && currentState != GhostState.Death)
             {
                 render.color = Color.blue;
-                if(!inGhostHouse)
+                if (!inGhostHouse)
                     ChangedState(GhostState.Frightened);
                 else
                     currentState = GhostState.Frightened;
@@ -374,7 +388,7 @@ public class Ghost : MonoBehaviour
         }
         else
         {
-            if(currentState == GhostState.Frightened)
+            if (currentState == GhostState.Frightened)
             {
                 OnReachedDestination?.Invoke();
                 render.color = originalColor;
@@ -388,22 +402,22 @@ public class Ghost : MonoBehaviour
     {
         speed = speed * 4f;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        
-        if(currentRutine != null)
+
+        if (currentRutine != null)
             StopCoroutine(currentRutine);
-        
+
         render.color = originalColor;
-        targetVector = houseNode.transform.position; 
+        targetVector = houseNode.transform.position;
         ChangedState(GhostState.Death);
     }
 
     private IEnumerator returnHouse()
     {
-        while(HasReachedDestination(houseNode.transform.position))
+        while (HasReachedDestination(houseNode.transform.position))
         {
             nextNode = calculateNextNode(false);
-        
-            while(HasReachedDestination(nextNode.transform.position))
+
+            while (HasReachedDestination(nextNode.transform.position))
             {
                 Move(nextNode.transform.position);
                 yield return null;
@@ -413,9 +427,9 @@ public class Ghost : MonoBehaviour
             currentNode = nextNode;
         }
 
-        targetVector = (Vector2) transform.position + 2*Vector2.down;
+        targetVector = (Vector2)transform.position + 2 * Vector2.down;
 
-        while(HasReachedDestination(targetVector))
+        while (HasReachedDestination(targetVector))
         {
             Move(targetVector);
             yield return null;
@@ -426,8 +440,8 @@ public class Ghost : MonoBehaviour
         speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
 
         targetVector = houseNode.transform.position;
-        
-        while(HasReachedDestination(targetVector))
+
+        while (HasReachedDestination(targetVector))
         {
             Move(targetVector);
             yield return null;
@@ -437,11 +451,11 @@ public class Ghost : MonoBehaviour
         ChangedState(GhostState.Scatter);
     }
 
-    protected float getDistance(Vector2 pos,Vector2 target)
+    protected float getDistance(Vector2 pos, Vector2 target)
     {
         float dx = Mathf.Abs(pos.x - target.x);
-        float dy =  Mathf.Abs(pos.y - target.y);
-        return  Mathf.Sqrt(dx*dx + dy*dy);
+        float dy = Mathf.Abs(pos.y - target.y);
+        return Mathf.Sqrt(dx * dx + dy * dy);
     }
 
     public GhostState getGhostState() => currentState;
@@ -450,7 +464,7 @@ public class Ghost : MonoBehaviour
     // tiene que parar todas las rutinas por si algun fantasma aún está en la casa, si es el caso hay dos rutinas corriendo
     public void stopStates() => StopAllCoroutines();
 
-    public void setParametrerInitial(Node ini,Node houseNode,Node[] patrolPath)
+    public void setParametrerInitial(Node ini, Node houseNode, Node[] patrolPath)
     {
         startNode = ini;
         currentNode = ini;
@@ -461,4 +475,6 @@ public class Ghost : MonoBehaviour
     private bool HasReachedDestination(Vector2 target) => Vector3.Distance(transform.position, target) > 0.1f;
 
     public void setPacman(GameObject pacMan) => movPacMan = pacMan.GetComponent<MovPacMan>();
+
+    public Vector2 getDirection() => direction;
 }

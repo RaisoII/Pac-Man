@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
         spawn.resetPositions();
         foreach(Ghost ghost in ghostArray)
             ghost.setCurrentNode();
-        
+        movPac.GetComponent<Animator>().SetBool("dead", false);
         movPac.resetPositionAndDirection();
     }
 
@@ -55,6 +55,7 @@ public class LevelManager : MonoBehaviour
         }
         
         movPac.enabled = true;
+        
     }
     public void deletePacDot(bool activeFrightened)
     {

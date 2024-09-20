@@ -6,8 +6,8 @@ public class MovPacMan : MonoBehaviour
 {
 
     [SerializeField] private float speed;
-    private Vector2 direction;
-    private Vector2 nextDirection;
+    [SerializeField] protected Vector2 direction;
+    [SerializeField] private Vector2 nextDirection;
     private Node startNode,currentNode,previousNode,targetNode;
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class MovPacMan : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         checkInput();
         move();

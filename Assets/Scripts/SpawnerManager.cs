@@ -19,8 +19,7 @@ public class SpawnerManager : MonoBehaviour
         {
             PacMan = Instantiate(prefabPacMan,nodePacMan.transform.position,Quaternion.identity);
             PacMan.GetComponent<MovPacMan>().setNodeIni(nodePacMan);
-        } 
-        
+        }
         listGhost = new List<GameObject>();
         
 
