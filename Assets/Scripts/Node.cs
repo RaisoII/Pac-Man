@@ -6,8 +6,8 @@ public class Node : MonoBehaviour
 {
     [SerializeField] private Node[] neighbors;
     [SerializeField] private Node portalNode;
-    Vector2[] possibleDirections;
-
+    private Vector2[] possibleDirections;
+    
     void Start()
     {
         searchDirections();

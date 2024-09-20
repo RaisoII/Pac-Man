@@ -14,7 +14,7 @@ public class ColisionPacMan : MonoBehaviour
         if(col.CompareTag("pacDots"))
         {
             bool activeFrightened = col.gameObject.GetComponent<PacDots>().getactiveFrightened();
-            levelManager.deletePacDot(activeFrightened);
+            levelManager.deletePacDot(activeFrightened,col.gameObject);
             Destroy(col.gameObject);
         }
         else if(col.CompareTag("Ghost"))

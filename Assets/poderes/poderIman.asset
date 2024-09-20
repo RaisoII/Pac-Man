@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   namePower: I-MAN
   duration: 5
-  cooldown: 60
+  cooldown: 2
   icon: {fileID: -79150610, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   description: "The PacDots will fall in love with\nPacMan's majestic presence, as\nif
     they were attracted by an\n inescapable force."

@@ -231,7 +231,7 @@ TextureImporter:
       name: emptyIcon
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 1
         width: 16
         height: 16
@@ -500,6 +500,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: flechaContinuar
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 1
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33bccfe908bdd004aa2536f4308e0c4c
+      internalID: -972765938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -523,6 +544,7 @@ TextureImporter:
       decrementoInvisible: -1003445254
       decrementoVelocidad: 22965080
       emptyIcon: 817634335
+      flechaContinuar: -972765938
       incrementoAsustado: 706096867
       incrementoVelocidad: 393070319
       marcoBoton: 1308106312

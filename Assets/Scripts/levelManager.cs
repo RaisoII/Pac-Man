@@ -1,22 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private float timeFrightenedRutine;
+    private  GameObject[] arrayPacDots;
     private float timeFrightenedRutineAux;
     private Coroutine frightenedRutine;
     private MovPacMan movPac;
-    private  int cantPacDots;
     private GameManager gameManager;
     private SpawnerManager spawn;
     private Ghost [] ghostArray;
-
+    private int cantPacDots;
     private void Awake()
     {
-        GameObject[] pactDotsArray = GameObject.FindGameObjectsWithTag("pacDots");
-        cantPacDots = pactDotsArray.Length - 1;
+        cantPacDots = GameObject.FindGameObjectsWithTag("pacDots").Length;
 
         spawn = gameObject.GetComponent<SpawnerManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -45,6 +45,9 @@ public class LevelManager : MonoBehaviour
             ghost.setCurrentNode();
         
         movPac.resetPositionAndDirection();
+
+        foreach(GameObject pacDots in arrayPacDots)
+            pacDots.GetComponent<PacDots>().restartPosition();
     }
 
     private IEnumerator startGame()
@@ -56,17 +59,20 @@ public class LevelManager : MonoBehaviour
             g.startWaiting();
         }
         
+        
+        movPac.gameObject.GetComponent<BoxCollider2D>().enabled = true;
         movPac.enabled = true;
         movPac.startMove();
 
         gameManager.startGame();
     }
-    public void deletePacDot(bool activeFrightened)
+    public void deletePacDot(bool activeFrightened,GameObject pacDot)
     {
         cantPacDots--;
+
         if(cantPacDots == 0)
         {
-            gameManager.nextLevel();
+            gameManager.existNextLevel();
             enabledMovementPrefabs(false);
         }
             
@@ -102,7 +108,6 @@ public class LevelManager : MonoBehaviour
     
     private IEnumerator restartGame()
     {
-        
         gameManager.stopGame();
         yield return new WaitForSeconds(3);
         resetPositions();
@@ -111,11 +116,34 @@ public class LevelManager : MonoBehaviour
 
     public void deathPacMan()
     { 
+        GameObject pacMan = movPac.gameObject;
+        pacMan.GetComponent<BoxCollider2D>().enabled = false;
+        foreach(Transform child in pacMan.transform)
+            Destroy(child.gameObject);
+
+        stopMovPacDots();
         enabledMovementPrefabs(false);
         bool continueGame =  gameManager.removeOneLive();
 
         if(continueGame)    
             StartCoroutine(restartGame());
+    }
+
+    // una mejora sería consultar si el pacman tiene el poder del iman que hace que los pacdots se muevan, para evitar 
+    // el foreach si es el caso que no tenga el poder
+    private void stopMovPacDots()
+    {
+        arrayPacDots =  GameObject.FindGameObjectsWithTag("pacDots"); 
+        
+        foreach(GameObject pacDot in arrayPacDots)
+        {
+            GoToTargetIMAN gotoPacMan = pacDot.GetComponent<GoToTargetIMAN>();
+            if(gotoPacMan != null)
+            {
+                gotoPacMan.stopCoroutine();
+                Destroy(gotoPacMan);
+            }
+        }
     }
 
     private void enabledMovementPrefabs(bool value)

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PowerManagerPacMan : MonoBehaviour
 {
+    [SerializeField] private Power p1,p2,p3;
     [SerializeField] private GameObject powerContainer;
     [SerializeField] private ManagerKeys managerKeys;
     [SerializeField] private Image coolDownFirstImage,coolDownSecondImage,coolDownThirdImage;
@@ -19,18 +20,19 @@ public class PowerManagerPacMan : MonoBehaviour
         timeCoolDownFirstPowerAux = timeCoolDownSecondPowerAux = timeCoolDownThirdPowerAux = 0; 
         
         dictionaryPower = new Dictionary<int,Power>();
-        //setPower(p1,0);
-        //setPower(p2,1);
-        //setPower(p3,2);
+        setPower(p1,0);
+        setPower(p2,1);
+        setPower(p3,2);
         checkPower();
     }
     public void setPower(Power p, int pos)
     {
+        if(p == null) // para pruebas, esto se borra luego. nunca puede ser nuloo
+            return;
+
         if(dictionaryPower.ContainsKey(pos))
         {
-            Debug.Log("ála entra ostiaa");
             dictionaryPower.Remove(pos);
-
         }
 
         dictionaryPower.Add(pos,p);
@@ -69,7 +71,14 @@ public class PowerManagerPacMan : MonoBehaviour
         for(int i = 0; i < 3;i++)
         {
             if(dictionaryPower.ContainsKey(i))
-                TpowerContainer.GetChild(i).gameObject.SetActive(true);
+            {
+                Power p = dictionaryPower[i];
+                GameObject container = TpowerContainer.GetChild(i).gameObject;
+                container.SetActive(true);
+                GameObject imageChild = container.transform.GetChild(0).gameObject;
+                Image image = imageChild.GetComponent<Image>();
+                image.sprite = p.getIcon;
+            }
             else
                 TpowerContainer.GetChild(i).gameObject.SetActive(false);
         }
@@ -110,17 +119,17 @@ public class PowerManagerPacMan : MonoBehaviour
     {
         if(key == KeyCode.Z)
         {
-            dictionaryPower[0].Activate();
+            dictionaryPower[0].Activate(timeDurationFirstPower);
             timeCoolDownFirstPowerAux = timeCoolDownFirstPower;
         }
         else if(key == KeyCode.X)
         {
-            dictionaryPower[1].Activate();
+            dictionaryPower[1].Activate(timeDurationSecondPower);
             timeCoolDownSecondPowerAux = timeCoolDownSecondPower;
         }
         else if(key == KeyCode.C)
         {
-            dictionaryPower[2].Activate();
+            dictionaryPower[2].Activate(timeDurationThirdPower);
             timeCoolDownThirdPowerAux = timeCoolDownThirdPower;
         }
     }

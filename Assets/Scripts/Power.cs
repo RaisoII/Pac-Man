@@ -30,9 +30,12 @@ public class Power : ScriptableObject,InterfaceIcon
         powerManager.setPower(this,pos);
     }
 
-    public void Activate()
+    public void Activate(float time)
     {
-        Debug.Log("se activó poder: "+namePower);
+        GameObject pacMan = GameObject.FindWithTag("PacMan");
+        GameObject powerObject = Instantiate(prefab,pacMan.transform.position,Quaternion.identity,pacMan.transform);
+        powerObject interfacePower = powerObject.GetComponent<powerObject>();
+        interfacePower.setTime(time);
     }
 
     public float getTimeCoolDown() => cooldown;

@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 621279096}
+  gameInterface: {fileID: 0}
   panelFinishLevel: {fileID: 0}
   lifes:
   - {fileID: 953204532}
@@ -234,6 +235,10 @@ MonoBehaviour:
   - {fileID: 1538774474}
   - {fileID: 1478273784}
   - {fileID: 136345012}
+  powerManager: {fileID: 0}
+  cantTimeFrightened: 0
+  cantSpeedPacman: 0
+  cantSpeedGhost: 0
 --- !u!4 &32215558
 Transform:
   m_ObjectHideFlags: 0
@@ -5098,7 +5103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3896659771391138014, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
       propertyPath: activeFrightened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4401720657894544068, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
       propertyPath: m_LocalScale.x
@@ -8698,7 +8703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3896659771391138014, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
       propertyPath: activeFrightened
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4401720657894544068, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
       propertyPath: m_LocalScale.x
@@ -9485,7 +9490,7 @@ GameObject:
   - component: {fileID: 1957879353}
   m_Layer: 0
   m_Name: pacDots
-  m_TagString: pacDots
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

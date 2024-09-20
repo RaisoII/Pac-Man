@@ -111,6 +111,7 @@ public class Ghost : MonoBehaviour
         while(time < timeMaxScatter)
         {
             nextNode = patrolPath[i];
+            direction = ((Vector2)nextNode.transform.position - (Vector2)transform.position).normalized;
             while(HasReachedDestination(nextNode.transform.position))
             {
                 Move(nextNode.transform.position);
@@ -191,11 +192,14 @@ public class Ghost : MonoBehaviour
     {
         foreach (Node node in startPath)
         {
+            direction = ((Vector2)node.transform.position - (Vector2)transform.position).normalized;
+
             while(HasReachedDestination(node.transform.position))
             {
                 Move(node.transform.position);
                 yield return new WaitForEndOfFrame();   
             }
+            
             transform.position = node.transform.position;
         }
         
@@ -220,6 +224,8 @@ public class Ghost : MonoBehaviour
                 target = endNode.transform;
             else
                 target = startNode.transform;
+
+            direction = ((Vector2)target.position - (Vector2)transform.position).normalized;
             
             while (HasReachedDestination(target.transform.position))
             {
@@ -275,7 +281,8 @@ public class Ghost : MonoBehaviour
             changedNextNode(nextNode.transform.position,patrolPath[0].transform.position);
         else if(currentState == GhostState.Death)
             changedNextNode(nextNode.transform.position,houseNode.transform.position);
-    
+
+        Debug.Log("mas cercano: "+nextNode.transform.position);
         while (HasReachedDestination(nextNode.transform.position))
         {
             Move(nextNode.transform.position);
@@ -303,7 +310,11 @@ public class Ghost : MonoBehaviour
         float distanceNextNode = getDistance(posNextNode,target);
         float distanceCurrentNode = getDistance(currentNode.transform.position,target);
         if(distanceNextNode < distanceCurrentNode)
-            nextNode = currentNode; 
+        {
+            nextNode = currentNode;
+            Vector2 dirAux = (Vector2)nextNode.transform.position - (Vector2)transform.position;
+            direction = dirAux.normalized;
+        }
     }
 
     private void OnStateChanged()
@@ -335,14 +346,17 @@ public class Ghost : MonoBehaviour
         
         foreach(Node neightbor in neightbors)
         {
+            Vector2 directionNode = currentNode.getDirectionNode(neightbor);
+        
             if(equalsDirection)
             {
-                Vector2 directionNode = currentNode.getDirectionNode(neightbor);
                 if(directionNode != -1*direction) // si la direccion del nodo es distinta a la direccion de la que vengo
                     newDirection = directionNode;
                 else
                     continue; 
             }
+            else
+                newDirection = directionNode;
             
             float distance = getDistance(neightbor.gameObject.transform.position,targetVector);
 
@@ -461,4 +475,6 @@ public class Ghost : MonoBehaviour
     private bool HasReachedDestination(Vector2 target) => Vector3.Distance(transform.position, target) > 0.1f;
 
     public void setPacman(GameObject pacMan) => movPacMan = pacMan.GetComponent<MovPacMan>();
+
+    public Vector2 getDirection() => direction;
 }

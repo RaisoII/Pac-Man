@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class selectorPower : MonoBehaviour
 {
+    [SerializeField] private GameObject interfacePower;
     [SerializeField] private GeneratorPowers generatorPowers;
     [SerializeField] private GameObject[] newPowerContainer;
     [SerializeField] private GameObject[] powerContainer;
@@ -14,6 +15,7 @@ public class selectorPower : MonoBehaviour
     [SerializeField] private float displacementText;
     [SerializeField] private float sizeContainer;
     [SerializeField] private float colorValue;
+    private GameManager gamerManager;
     private GameObject currentContainer;
     private GameObject[] currentArrayContainer;
     private GameObject previousContainer;
@@ -22,6 +24,7 @@ public class selectorPower : MonoBehaviour
 
     private void Start()
     {
+        gamerManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         indexContainer = 0;
         currentArrayContainer = newPowerContainer;
         currentContainer = newPowerContainer[0];
@@ -49,7 +52,22 @@ public class selectorPower : MonoBehaviour
         if(currentArrayContainer == newPowerContainer)
         {
             currentIcon.aplyEffect(indexContainer);
+            unfocusContainer();
+            currentArrayContainer = powerContainer;
+            currentContainer = currentArrayContainer[currentArrayContainer.Length - 1];
+            previousContainer = null;
+            indexContainer = currentArrayContainer.Length - 1;
+            focusContainer();
         }
+        else
+        {
+            if(currentContainer == currentArrayContainer[currentArrayContainer.Length - 1])
+            {
+                interfacePower.SetActive(false);
+                gamerManager.nextLevel();
+            }
+        }
+
     }
 
     private void selectContainer(int value)
@@ -65,6 +83,32 @@ public class selectorPower : MonoBehaviour
         
         currentContainer = currentArrayContainer[indexContainer];
         focusContainer();
+
+        if(currentArrayContainer == newPowerContainer)
+        {
+            currentIcon = generatorPowers.getInterfaceIcon(indexContainer);
+            textDescription.text ="     "+currentIcon.getName +"\n\n"+currentIcon.getDescription;
+        }
+    }
+
+    private void unfocusContainer()
+    {
+        // vuelvo el color grisaseo a el "boton" que apreté
+        RectTransform rectCurrent =  currentContainer.GetComponent<RectTransform>();
+
+        rectCurrent.localScale = new Vector2(rectCurrent.localScale.x - sizeContainer,
+                                                    rectCurrent.localScale.y - sizeContainer);
+    
+        Image currentImage = currentContainer.GetComponent<Image>();
+        
+        currentImage.color = new Color(currentImage.color.r - colorValue,currentImage.color.g - colorValue,
+                                        currentImage.color.b - colorValue ,1);
+        
+        currentImage = currentContainer.transform.GetChild(0).gameObject.GetComponent<Image>();
+        currentImage.color = new Color(currentImage.color.r - colorValue,currentImage.color.g - colorValue,
+                                        currentImage.color.b - colorValue ,1);
+    
+        powerDescription.SetActive(false);
     }
 
     private void focusContainer()
@@ -107,8 +151,5 @@ public class selectorPower : MonoBehaviour
                                                         rectCurrent.anchoredPosition.y + displacementText);
         
         previousContainer = currentContainer;
-
-        currentIcon = generatorPowers.getInterfaceIcon(indexContainer);
-        textDescription.text ="     "+currentIcon.getName +"\n\n"+currentIcon.getDescription;
     }
 }

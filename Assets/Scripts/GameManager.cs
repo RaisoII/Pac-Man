@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
                     Destroy(inter);
             }
 
+            gameInterface.SetActive(true);
             powerManager.checkPower();
         }
     }
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour
 
     public void stopGame() => powerManager.stopCoroutinesTimeCoolDown();
 
-    public void nextLevel()
+    public void existNextLevel()
     {
         stopGame();
         currentLevel++;
@@ -125,6 +126,8 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(nextLevelRutine(nameNextEscene));
     }
+
+    public void nextLevel() => SceneManager.LoadScene("Level"+currentLevel);
 
     private IEnumerator nextLevelRutine(string nextScene)
     {

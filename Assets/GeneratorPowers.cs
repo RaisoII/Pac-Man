@@ -24,7 +24,7 @@ public class GeneratorPowers : MonoBehaviour
         managerPower = GameObject.Find("GameManager").GetComponent<PowerManagerPacMan>();
         
         interfaceGame.SetActive(false);
-        pacMan.SetActive(false);
+        pacMan.transform.position = new Vector2(-100,-100);
         
         cantPowersOfBuffs = 0;
         
