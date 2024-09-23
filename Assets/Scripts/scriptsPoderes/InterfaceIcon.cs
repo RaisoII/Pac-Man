@@ -10,5 +10,6 @@ public interface InterfaceIcon
 
     public Power GetPower{get; }
 
-    public void aplyEffect(int pos);
+    public void aplyEffect(Power power,int pos);
+    public bool isPowerBuff();
 }

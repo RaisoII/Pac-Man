@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc93beedd07b7b429939fa8b710d011, type: 3}
   m_Name: enfriamientoInvisible
   m_EditorClassIdentifier: 
-  nameBuff: INVISIBLE-MAN
+  nameBuff: COOLDOWN INVISIBLE-MAN
   compatibilityPower: {fileID: 11400000, guid: cb3358654b0fe624a991bb19897f3f78, type: 2}
   icon: {fileID: -1003445254, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   probability: 0

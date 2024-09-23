@@ -20,6 +20,16 @@ public class PowerManagerPacMan : MonoBehaviour
         timeCoolDownFirstPowerAux = timeCoolDownSecondPowerAux = timeCoolDownThirdPowerAux = 0; 
         
         dictionaryPower = new Dictionary<int,Power>();
+
+        if(p1 != null)
+            p1 = p1.Clone();
+            
+        if(p2 != null)
+            p2 = p2.Clone();
+            
+        if(p3 != null)
+            p3 = p3.Clone();
+        
         setPower(p1,0);
         setPower(p2,1);
         setPower(p3,2);

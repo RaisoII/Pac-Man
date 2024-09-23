@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject); // Destruye cualquier duplicado que se cree
         
+        cantTimeFrightened = 0;
+        cantSpeedPacman = 0;
+        cantSpeedGhost = 0;
         currentLevel = 1;
     }
 

@@ -14,7 +14,16 @@ public abstract class Buff : ScriptableObject, InterfaceIcon
 
     public Power GetPower => compatibilityPower;
 
-    public abstract void aplyEffect(int pos); // la pos no se usa en este caso
+    public abstract void aplyEffect(Power power,int pos); // la pos no se usa en este caso
 
     public abstract void generateParametersRandoms();
+
+    protected int getBiasedRandom(int min, int max)
+    {
+        float randomValue = Random.Range(0f, 1f); // Obtén un valor aleatorio entre 0 y 1
+        float biasedValue = Mathf.Pow(randomValue, 3); // Aplica una función cúbica para reducir la probabilidad de valores altos
+        return Mathf.FloorToInt(min + (max - min) * biasedValue); // Escala el valor al rango deseado
+    }
+
+    public bool isPowerBuff() => true;
 }

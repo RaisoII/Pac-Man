@@ -17,7 +17,7 @@ public class MovPacMan : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         checkInput();
         move();

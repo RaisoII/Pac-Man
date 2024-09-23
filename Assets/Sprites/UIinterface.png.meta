@@ -127,7 +127,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 49
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -148,7 +148,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 49
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -169,7 +169,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 49
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -190,7 +190,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 19
         width: 20
         height: 20
       alignment: 0
@@ -211,7 +211,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 22
-        y: 2
+        y: 21
         width: 16
         height: 16
       alignment: 0
@@ -231,8 +231,8 @@ TextureImporter:
       name: emptyIcon
       rect:
         serializedVersion: 2
-        x: 64
-        y: 1
+        x: 80
+        y: 4
         width: 16
         height: 16
       alignment: 0
@@ -253,7 +253,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 33
+        y: 52
         width: 16
         height: 16
       alignment: 0
@@ -274,7 +274,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 33
+        y: 52
         width: 16
         height: 16
       alignment: 0
@@ -295,7 +295,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 33
+        y: 52
         width: 16
         height: 16
       alignment: 0
@@ -316,7 +316,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 49
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -337,7 +337,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 49
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -358,7 +358,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 49
+        y: 68
         width: 16
         height: 16
       alignment: 0
@@ -379,7 +379,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 33
+        y: 52
         width: 16
         height: 16
       alignment: 0
@@ -400,7 +400,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 33
+        y: 52
         width: 16
         height: 16
       alignment: 0
@@ -421,7 +421,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 17
+        y: 36
         width: 16
         height: 16
       alignment: 0
@@ -442,7 +442,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 17
+        y: 36
         width: 16
         height: 16
       alignment: 0
@@ -463,7 +463,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 33
+        y: 52
         width: 16
         height: 16
       alignment: 0
@@ -484,7 +484,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 17
+        y: 36
         width: 16
         height: 16
       alignment: 0
@@ -505,7 +505,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 1
+        y: 20
         width: 16
         height: 16
       alignment: 0
@@ -517,6 +517,69 @@ TextureImporter:
       bones: []
       spriteID: 33bccfe908bdd004aa2536f4308e0c4c
       internalID: -972765938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cruz
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 25
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43e8ee137c22591458949c7e7ea64ac0
+      internalID: -838189571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tick
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 25
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7dd681f4d39bc54ba9f2a5e366f7589
+      internalID: 259987918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: seleccionarPoderFondo
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 20
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c149308c4b0ad34a9be42e51404ad82
+      internalID: -994833924
       vertices: []
       indices: 
       edges: []
@@ -539,6 +602,7 @@ TextureImporter:
       aumentoIman: -1754940102
       aumentoInvisible: 1399662040
       coolDown: 800111884
+      cruz: -838189571
       decrementoCaminoFuego: -911822784
       decrementoIman: -896347700
       decrementoInvisible: -1003445254
@@ -551,6 +615,8 @@ TextureImporter:
       poderFantasma: -1966936687
       poderFuego: 160699461
       poderIman: -79150610
+      seleccionarPoderFondo: -994833924
+      tick: 259987918
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

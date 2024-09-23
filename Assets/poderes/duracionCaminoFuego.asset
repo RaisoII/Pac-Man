@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca6f8f83b9ad1e4bb92cb3fb0234264, type: 3}
   m_Name: duracionCaminoFuego
   m_EditorClassIdentifier: 
-  nameBuff: INFERNO-PATH
+  nameBuff: DURATION INFERNO-PATH
   compatibilityPower: {fileID: 11400000, guid: 49cc2924fab9a384d8f4e2f9afba0d6a, type: 2}
   icon: {fileID: -577785214, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   probability: 0

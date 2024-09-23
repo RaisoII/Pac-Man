@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca6f8f83b9ad1e4bb92cb3fb0234264, type: 3}
   m_Name: duracionInvisible
   m_EditorClassIdentifier: 
-  nameBuff: INVISIBLE-MAN
+  nameBuff: DURATION INVISIBLE-MAN
   compatibilityPower: {fileID: 11400000, guid: cb3358654b0fe624a991bb19897f3f78, type: 2}
   icon: {fileID: 1399662040, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   probability: 0

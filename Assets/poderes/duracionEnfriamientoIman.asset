@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7a4eaf93dce0e499b2428bc0161089, type: 3}
   m_Name: duracionEnfriamientoIman
   m_EditorClassIdentifier: 
-  nameBuff: I-MAN
+  nameBuff: EXTEND I-MAN
   compatibilityPower: {fileID: 11400000, guid: 915f6ef9ccfe002448f3d1048269d93a, type: 2}
   icon: {fileID: -1487224817, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   probability: 0

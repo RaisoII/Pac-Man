@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fc93beedd07b7b429939fa8b710d011, type: 3}
   m_Name: enfriamientoCaminoFuego
   m_EditorClassIdentifier: 
-  nameBuff: INFERNO-PATH
+  nameBuff: COOLDOWN INFERNO-PATH
   compatibilityPower: {fileID: 11400000, guid: 49cc2924fab9a384d8f4e2f9afba0d6a, type: 2}
   icon: {fileID: -911822784, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   probability: 0

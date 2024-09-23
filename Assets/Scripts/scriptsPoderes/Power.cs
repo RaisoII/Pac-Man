@@ -6,24 +6,25 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "NuevoPoder", menuName = "Poder")]
 public class Power : ScriptableObject,InterfaceIcon
 {
-
     public string namePower;
     public float duration;
     public float cooldown;
+    public float radious;
     public Sprite icon;
     
     [TextArea(1, 10)] //(lineasMinimas,lineasMaximas)
     public string description;
+    private string stats;
     public GameObject prefab;
 
     public Sprite getIcon => icon;
 
     public string  getDescription => description;
     public string getName => namePower;
-    
+  
     public Power GetPower => this;
 
-    public void aplyEffect(int pos)
+    public void aplyEffect(Power power,int pos)
     {
         GameObject GameManager = GameObject.Find("GameManager");
         PowerManagerPacMan powerManager = GameManager.GetComponent<PowerManagerPacMan>();
@@ -38,6 +39,27 @@ public class Power : ScriptableObject,InterfaceIcon
         interfacePower.setTime(time);
     }
 
+    public string getStats()
+    {
+        stats = "";
+        if (cooldown != -1)
+          stats += $"Cooldown: {cooldown} s \n";
+
+        if (duration != -1)
+          stats += $"Duration: {duration} s\n";
+
+        if (radious != -1)
+          stats += $"Radious: {radious} m\n";
+
+        return stats;
+    }
+
+    public Power Clone()=> ScriptableObject.Instantiate(this);
+
+    public void setTimeCoolDown(float time) => cooldown = time;
+    public void setTimeDuration(float duration) => this.duration = duration;
+    public void setRadious(float radious) => this.radious = radious;
     public float getTimeCoolDown() => cooldown;
     public float getTimeDuration() => duration;
+    public bool isPowerBuff() => false;
 }

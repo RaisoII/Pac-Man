@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private float timeFrightenedRutine;
+    [SerializeField] private float timeWaiting;
     private  GameObject[] arrayPacDots;
     private float timeFrightenedRutineAux;
     private Coroutine frightenedRutine;
@@ -52,7 +53,7 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator startGame()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(timeWaiting);
         foreach(Ghost g in ghostArray)
         {
             g.enabled = true;
@@ -109,7 +110,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator restartGame()
     {
         gameManager.stopGame();
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(timeWaiting);
         resetPositions();
         StartCoroutine(startGame());
     }
