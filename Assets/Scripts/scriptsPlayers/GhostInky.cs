@@ -10,12 +10,10 @@ public class GhostInky : Ghost
         base.Awake();
         
         OnReachedDestination += HandleReachedDestination;
-
-        Invoke("findPathStart",3.5f);
         blinky = GameObject.Find("ghostBlinky(Clone)");
     }
     
-    private void findPathStart()
+    public override void findPathStart()
     {
         startPath.Add(endNode);
         startPath.Add(endNode.getNeightbor(Vector2.right));

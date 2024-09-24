@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7439291523049001513}
+  - component: {fileID: 1577531791585934348}
   m_Layer: 0
   m_Name: prefabPoderCaminoFuego
   m_TagString: Untagged
@@ -31,3 +32,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1577531791585934348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2729641555546098204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edec4e0db93c43f4cb3bb00de29b1b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabFire: {fileID: 8975323587454078769, guid: acc38f2604680f24b911443c2c514135, type: 3}
+  timeFire: 3
+  maxSpawnDelay: 1
+  minSpawnDelay: 0.1

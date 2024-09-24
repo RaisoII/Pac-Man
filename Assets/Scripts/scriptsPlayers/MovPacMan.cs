@@ -149,4 +149,6 @@ public class MovPacMan : MonoBehaviour
     public void startMove() => changedPosition(direction);
 
     public Vector2 getDirection() => direction;
+
+    public float getSpeed() => speed;
 }

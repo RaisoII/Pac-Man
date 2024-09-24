@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class Ghost : MonoBehaviour
+public abstract class Ghost : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] protected float timeWaiting,timeMaxScatter,timeMaxChasing;
@@ -36,11 +36,14 @@ public class Ghost : MonoBehaviour
     {
         
     }
+    
     protected virtual void Awake()
     {
         originalColor = render.color;
         startPath = new List<Node>();
     }
+
+    public abstract void findPathStart();
 
     //es invocado en el awake
     public virtual void startWaiting()

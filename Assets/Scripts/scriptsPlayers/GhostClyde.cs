@@ -10,11 +10,9 @@ public class GhostClyde : Ghost
         
         OnReachedDestination += HandleReachedDestination;
         checkDistancePacMan += DistanceForPackMan;
-        
-        Invoke("findPathStart",3.5f);
     }
 
-    private void findPathStart()
+    public override void findPathStart()
     {
         startPath.Add(endNode);
         startPath.Add(endNode.getNeightbor(Vector2.left));

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   namePower: INVISIBLE-MAN
   duration: 8
-  cooldown: 8
+  cooldown: 1
   radious: -1
   icon: {fileID: -1966936687, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   description: "PacMan wraps himself in a cloak\nof invisibility,becoming intangible\nand

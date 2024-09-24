@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   namePower: INFERNO-PATH
   duration: 8
-  cooldown: 8
+  cooldown: 1
   radious: -1
   icon: {fileID: 160699461, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   description: "PacMan will leave a hellish path \nof suffering and pain"

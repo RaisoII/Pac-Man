@@ -7,12 +7,10 @@ public class GhostPinky : Ghost
     protected override void Awake()
     {
         base.Awake();
-        
         OnReachedDestination += HandleReachedDestination;
-        Invoke("findPathStart",3.5f);
     }
     
-    private void findPathStart()
+    public override void findPathStart()
     {
         startPath.Add(endNode);
         startPath.Add(endNode.getNeightbor(Vector2.up));

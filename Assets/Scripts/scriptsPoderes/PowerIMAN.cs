@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerIMAN : MonoBehaviour, powerObject
 {
     private float time;
-    public IEnumerator powerActivate()
+    private IEnumerator powerActivate()
     {
         while(time > 0)
         {

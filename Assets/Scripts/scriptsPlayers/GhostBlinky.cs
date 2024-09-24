@@ -10,6 +10,11 @@ public class GhostBlinky : Ghost
         OnReachedDestination += HandleReachedDestination;
     }
 
+    public override void findPathStart()
+    {
+
+    }
+
     public override void startWaiting() => StartCoroutine(waitingTime());
 
     private IEnumerator waitingTime()

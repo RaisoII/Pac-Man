@@ -5,6 +5,4 @@ using UnityEngine;
 public interface powerObject
 {
     public void setTime(float time);
-    public IEnumerator powerActivate();
-
 }

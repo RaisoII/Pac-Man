@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private float timeFrightenedRutine;
     [SerializeField] private float timeWaiting;
+    [SerializeField] private bool buffsGhost;
+    [SerializeField] private TextBuffsInterface textBuffs;
     private  GameObject[] arrayPacDots;
     private float timeFrightenedRutineAux;
     private Coroutine frightenedRutine;
@@ -36,8 +38,16 @@ public class LevelManager : MonoBehaviour
         ColisionPacMan colPac = spawn.getPacMan().GetComponent<ColisionPacMan>();
         colPac.setLevelManager(this);
 
-        StartCoroutine(startGame());
+        if(buffsGhost)
+            textBuffs.showBuffs();
+        else
+            StartCoroutine(startGameRoutine());
     }
+
+    public void startGame() // desde fuera
+    {
+        StartCoroutine(startGameRoutine());
+    } 
 
     public void resetPositions()
     {
@@ -49,15 +59,23 @@ public class LevelManager : MonoBehaviour
 
         foreach(GameObject pacDots in arrayPacDots)
             pacDots.GetComponent<PacDots>().restartPosition();
+
+        List<GameObject> prefabFire = GameObject.FindGameObjectsWithTag("Fire").ToList();
+        while(prefabFire.Count > 0)
+        {
+            Destroy(prefabFire[0]);
+            prefabFire.RemoveAt(0);
+        }
     }
 
-    private IEnumerator startGame()
+    private IEnumerator startGameRoutine()
     {
         yield return new WaitForSeconds(timeWaiting);
         foreach(Ghost g in ghostArray)
         {
-            g.enabled = true;
             g.startWaiting();
+            g.findPathStart();
+            g.enabled = true;
         }
         
         
@@ -107,12 +125,12 @@ public class LevelManager : MonoBehaviour
             ghost.ChangedStateFrightened(false);
     }
     
-    private IEnumerator restartGame()
+    private IEnumerator restartGameRoutine()
     {
         gameManager.stopGame();
         yield return new WaitForSeconds(timeWaiting);
         resetPositions();
-        StartCoroutine(startGame());
+        StartCoroutine(startGameRoutine());
     }
 
     public void deathPacMan()
@@ -127,7 +145,7 @@ public class LevelManager : MonoBehaviour
         bool continueGame =  gameManager.removeOneLive();
 
         if(continueGame)    
-            StartCoroutine(restartGame());
+            StartCoroutine(restartGameRoutine());
     }
 
     // una mejora sería consultar si el pacman tiene el poder del iman que hace que los pacdots se muevan, para evitar 
