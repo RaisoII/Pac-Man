@@ -5090,7 +5090,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 16777215
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
+  m_fontColor: {r: 1, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7885,7 +7885,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 16777215
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
+  m_fontColor: {r: 0.46590984, g: 1, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9032,6 +9032,18 @@ PrefabInstance:
     - target: {fileID: 3178495842188869897, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
       propertyPath: m_Name
       value: pacDots (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3896659771391138014, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
+      propertyPath: activeFrightened
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4401720657894544068, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4401720657894544068, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4401720657894544068, guid: 6ce54e90a0793f9469de8eecfee7602d, type: 3}
       propertyPath: m_LocalScale.z
@@ -10282,8 +10294,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeFrightenedRutine: 10
   timeWaiting: 0
-  buffsGhost: 1
+  buffsGhost: 0
   textBuffs: {fileID: 1780819325}
+  soundStart: {fileID: 8300000, guid: 363ff1f2a85d52e4cabb2c346dea193d, type: 3}
+  soundDeath: {fileID: 8300000, guid: 1f695e3c94808c743a169b00bb06dce0, type: 3}
+  soundNormalGhost: {fileID: 8300000, guid: 0f47c71b5a86fef4088914d10b86d76e, type: 3}
+  soundFrigthenedGhost: {fileID: 8300000, guid: 50f461da8ea48f241aba11265b370b77, type: 3}
 --- !u!114 &1780819324
 MonoBehaviour:
   m_ObjectHideFlags: 0

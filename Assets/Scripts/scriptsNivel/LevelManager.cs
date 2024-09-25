@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float timeWaiting;
     [SerializeField] private bool buffsGhost;
     [SerializeField] private TextBuffsInterface textBuffs;
+    [SerializeField] private AudioClip soundStart,soundDeath,soundNormalGhost,soundFrigthenedGhost;
     private  GameObject[] arrayPacDots;
     private float timeFrightenedRutineAux;
     private Coroutine frightenedRutine;
@@ -70,7 +71,10 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator startGameRoutine()
     {
+        ManagerSound.instance.PlaySFX(soundStart,false);
         yield return new WaitForSeconds(timeWaiting);
+        
+        ManagerSound.instance.PlaySFX(soundNormalGhost,true);
         foreach(Ghost g in ghostArray)
         {
             g.startWaiting();
@@ -102,7 +106,11 @@ public class LevelManager : MonoBehaviour
                 ghost.ChangedStateFrightened(true);
 
             if(frightenedRutine == null)
+            {
+                ManagerSound.instance.StopAudioLoop();
+                ManagerSound.instance.PlaySFX(soundFrigthenedGhost,true);
                 frightenedRutine = StartCoroutine(frightenedTime());
+            }
             else 
                 timeFrightenedRutineAux += timeFrightenedRutine; 
         }
@@ -123,10 +131,16 @@ public class LevelManager : MonoBehaviour
 
         foreach(Ghost ghost in ghostArray)
             ghost.ChangedStateFrightened(false);
+        
+        
+                ManagerSound.instance.StopAudioLoop();
+                ManagerSound.instance.PlaySFX(soundNormalGhost,true);
     }
     
     private IEnumerator restartGameRoutine()
     {
+        
+        ManagerSound.instance.PlaySFX(soundDeath,false);
         gameManager.stopGame();
         yield return new WaitForSeconds(timeWaiting);
         resetPositions();

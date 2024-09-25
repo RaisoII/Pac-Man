@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerINVISIBLEMAN : MonoBehaviour,powerObject
 {
     [SerializeField] private float blinkDuration; 
-    
+    [SerializeField] private AudioClip eatOpenSound, eatCloseSound;  // Sonido de abrir
     private float duration;
     private SpriteRenderer spriteRenderer; 
     private GameObject pacMan;
@@ -30,7 +30,6 @@ public class PowerINVISIBLEMAN : MonoBehaviour,powerObject
         while (timer < blinkDuration)
         {
             timer += Time.deltaTime;
-            Debug.Log("estoy parpadeando xd");
             // Alternar entre alfa 0.5 y 1.
             color.a = Mathf.PingPong(Time.time * 2f, 0.5f) + 0.5f;
             spriteRenderer.color = color;
@@ -44,6 +43,7 @@ public class PowerINVISIBLEMAN : MonoBehaviour,powerObject
         Destroy(pacMan.GetComponent<colisionPacManINVISIBLE>());
         ColisionPacMan col = pacMan.AddComponent<ColisionPacMan>();
         col.setLevelManager(levelManager);
+        col.setSoundEat(eatOpenSound, eatCloseSound);
         Destroy(gameObject);
     }
 
@@ -57,6 +57,7 @@ public class PowerINVISIBLEMAN : MonoBehaviour,powerObject
         
         colisionPacManINVISIBLE colINVISIBLE = pacMan.AddComponent<colisionPacManINVISIBLE>();
         colINVISIBLE.setLevelManager(levelManager);
+        colINVISIBLE.setSoundEat(eatOpenSound, eatCloseSound);
         spriteRenderer = pacMan.GetComponent<SpriteRenderer>();
         StartCoroutine(powerActivate());
     }

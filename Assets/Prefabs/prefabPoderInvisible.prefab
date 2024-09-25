@@ -45,3 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blinkDuration: 3
+  eatOpenSound: {fileID: 8300000, guid: b1578bb5001833741b1a306f60bff5bb, type: 3}
+  eatCycleSound: {fileID: 8300000, guid: bd5e42ee3b54a2544894967841615de6, type: 3}
+  eatCloseSound: {fileID: 8300000, guid: 455e51bad97de9948a288f4a8051f00f, type: 3}

@@ -13,7 +13,7 @@ public class MenuManager : MonoBehaviour
         
         if(gameManager != null)
             Destroy(gameManager);
-            
+        
         if(inter != null)
             Destroy(inter);
         
