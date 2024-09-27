@@ -8,6 +8,7 @@ public class animationControllerGhost : MonoBehaviour
     private Animator animator;
     [SerializeField] private Ghost ghost;
     [SerializeField] private Vector2 direction;
+    [SerializeField] private bool dead, scary;
 
 
     void Start()
@@ -15,7 +16,7 @@ public class animationControllerGhost : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         ghost = GetComponent<Ghost>();
-
+        direction = new Vector2(1, 0);
     }
 
     void Update()
@@ -25,7 +26,7 @@ public class animationControllerGhost : MonoBehaviour
     void FixedUpdate()
     {
         direction = ghost.getDirection();
-        if ((Mathf.Abs(direction.x) == 1) && (direction.y == 0))
+       /* if ((Mathf.Abs(direction.x) == 1) && (direction.y == 0))
         {
             animator.SetFloat("horizontal", direction.x);
             animator.SetFloat("vertical", 0);
@@ -34,7 +35,9 @@ public class animationControllerGhost : MonoBehaviour
         {
             animator.SetFloat("horizontal", 0);
             animator.SetFloat("vertical", direction.y);
-        }
+        }*/
+            animator.SetBool("scary", ghost.getScared());
+            animator.SetBool("dead", ghost.getDead());
     }
 }
 

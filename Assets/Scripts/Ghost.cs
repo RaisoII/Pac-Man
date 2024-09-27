@@ -36,9 +36,11 @@ public class Ghost : MonoBehaviour
     {
 
     }
+
+
     protected virtual void Awake()
     {
-        originalColor = render.color;
+        //originalColor = render.color;
         startPath = new List<Node>();
     }
 
@@ -378,7 +380,7 @@ public class Ghost : MonoBehaviour
         {
             if (currentState != GhostState.Frightened && currentState != GhostState.Death)
             {
-                render.color = Color.blue;
+                //render.color = Color.blue;
                 if (!inGhostHouse)
                     ChangedState(GhostState.Frightened);
                 else
@@ -391,7 +393,7 @@ public class Ghost : MonoBehaviour
             if (currentState == GhostState.Frightened)
             {
                 OnReachedDestination?.Invoke();
-                render.color = originalColor;
+                //render.color = originalColor;
                 ChangedState(GhostState.Chasing);
                 speed = speed * 2f;
             }
@@ -406,7 +408,7 @@ public class Ghost : MonoBehaviour
         if (currentRutine != null)
             StopCoroutine(currentRutine);
 
-        render.color = originalColor;
+        //render.color = originalColor;
         targetVector = houseNode.transform.position;
         ChangedState(GhostState.Death);
     }
@@ -477,4 +479,6 @@ public class Ghost : MonoBehaviour
     public void setPacman(GameObject pacMan) => movPacMan = pacMan.GetComponent<MovPacMan>();
 
     public Vector2 getDirection() => direction;
+    public bool getScared() => (currentState == GhostState.Frightened);
+    public bool getDead() => (currentState == GhostState.Death);
 }
