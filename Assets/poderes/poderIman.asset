@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ac5396cf22ea54190a43b234296e6b, type: 3}
+  m_Name: poderIman
+  m_EditorClassIdentifier: 
+  namePower: I-MAN
+  duration: 8
+  cooldown: 8
+  radious: 3.5
+  icon: {fileID: -79150610, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
+  description: "The PacDots will fall in love with\nPacMan's majestic presence, as\nif
+    they were attracted by an\n inescapable force."
+  prefab: {fileID: 4292189640817381710, guid: 7cf33f9ee7cc97c4d9b8602ad175f62d, type: 3}

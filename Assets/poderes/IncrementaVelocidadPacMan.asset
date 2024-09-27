@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63def5fe56afd2a429f5175e7047e324, type: 3}
+  m_Name: IncrementaVelocidadPacMan
+  m_EditorClassIdentifier: 
+  nameBuff: 
+  compatibilityPower: {fileID: 0}
+  icon: {fileID: -1493976556, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
+  probability: 0
+  speedPacMan: 0

@@ -8,6 +8,7 @@ TagManager:
   - PacMan
   - Ghost
   - pacDots
+  - Fire
   layers:
   - Default
   - TransparentFX
