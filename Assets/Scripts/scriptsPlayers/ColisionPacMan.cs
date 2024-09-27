@@ -50,4 +50,6 @@ public class ColisionPacMan : MonoBehaviour
         this.eatOpenSound = eatOpenSound;
         this.eatCloseSound = eatCloseSound;
     }
+
+    public bool getEating() => isEating;
 }

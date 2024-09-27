@@ -151,4 +151,6 @@ public class MovPacMan : MonoBehaviour
     public Vector2 getDirection() => direction;
 
     public float getSpeed() => speed;
+
+    public bool getEating() => gameObject.GetComponent<ColisionPacMan>().getEating();
 }
