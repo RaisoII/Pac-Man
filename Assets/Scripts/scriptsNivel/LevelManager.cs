@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool buffsGhost;
     [SerializeField] private TextBuffsInterface textBuffs;
     [SerializeField] private AudioClip soundStart,soundDeath,soundNormalGhost,soundFrigthenedGhost;
+    [SerializeField] private GameObject prefabText;
     private  GameObject[] arrayPacDots;
     private float timeFrightenedRutineAux;
     private Coroutine frightenedRutine;
@@ -18,8 +20,12 @@ public class LevelManager : MonoBehaviour
     private SpawnerManager spawn;
     private Ghost [] ghostArray;
     private int cantPacDots;
+    private int cantPacDotsConsume;
+    private bool isFirstTimeStart;
     private void Awake()
     {
+        isFirstTimeStart = true;
+        cantPacDotsConsume = 0;
         cantPacDots = GameObject.FindGameObjectsWithTag("pacDots").Length;
 
         spawn = gameObject.GetComponent<SpawnerManager>();
@@ -74,11 +80,19 @@ public class LevelManager : MonoBehaviour
         ManagerSound.instance.PlaySFX(soundStart,false);
         yield return new WaitForSeconds(timeWaiting);
         
-        ManagerSound.instance.PlaySFX(soundNormalGhost,true);
+        if(ghostArray.Length > 0)
+            ManagerSound.instance.PlaySFX(soundNormalGhost,true);
+        
         foreach(Ghost g in ghostArray)
         {
             g.startWaiting();
-            g.findPathStart();
+
+            if(isFirstTimeStart)
+            {
+                g.findPathStart();
+                isFirstTimeStart = false;
+            }
+
             g.enabled = true;
         }
         
@@ -92,14 +106,16 @@ public class LevelManager : MonoBehaviour
     public void deletePacDot(bool activeFrightened,GameObject pacDot)
     {
         cantPacDots--;
-
+        cantPacDotsConsume++;
+        instantiateText();
         if(cantPacDots == 0)
         {
+            ManagerSound.instance.StopAudioLoop(); // para los sonidos en loop
             gameManager.existNextLevel();
             enabledMovementPrefabs(false);
         }
             
-        if(activeFrightened)
+        if(activeFrightened && cantPacDots != 0)
         {
             // está fuera porque hay fantasmas que pueden estar escapando y otros en la ghostHouse o en dispersión
             foreach(Ghost ghost in ghostArray) 
@@ -116,6 +132,14 @@ public class LevelManager : MonoBehaviour
         }
 
         gameManager.incrementScore();
+    }
+
+    private void instantiateText()
+    {
+        Vector2 dirPacMan = -1*movPac.getDirection();
+        Vector2 posText = (Vector2)movPac.gameObject.transform.localPosition + dirPacMan;
+        GameObject objectText = Instantiate(prefabText,posText,Quaternion.identity);
+        objectText.GetComponent<DisappearText>().setCant(cantPacDotsConsume);
     }
 
     private IEnumerator frightenedTime()
@@ -139,7 +163,7 @@ public class LevelManager : MonoBehaviour
     
     private IEnumerator restartGameRoutine()
     {
-        
+        ManagerSound.instance.StopAudioLoop(); // para los sonidos en loop
         ManagerSound.instance.PlaySFX(soundDeath,false);
         gameManager.stopGame();
         yield return new WaitForSeconds(timeWaiting);
@@ -149,6 +173,7 @@ public class LevelManager : MonoBehaviour
 
     public void deathPacMan()
     { 
+        
         GameObject pacMan = movPac.gameObject;
         pacMan.GetComponent<BoxCollider2D>().enabled = false;
         foreach(Transform child in pacMan.transform)

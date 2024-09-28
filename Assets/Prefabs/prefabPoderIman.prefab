@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedPacDots: 3.5
+  variation: 2
 --- !u!50 &2631647543349016357
 Rigidbody2D:
   serializedVersion: 4

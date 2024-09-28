@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject panelFinishLevel;
     [SerializeField] private GameObject [] lifes;
     [SerializeField] private PowerManagerPacMan powerManager;
+    [SerializeField] private AudioClip soundWin;
     private int cantDeaths;
     private static GameManager instance;
     private int currentLevel;
@@ -44,20 +45,27 @@ public class GameManager : MonoBehaviour
         cantDeaths = 0;
     }
 
-     // Método que se llama cada vez que se carga una nueva escena (por ahora no le doy uso)
+     // Método que se llama cada vez que se carga una nueva escena
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name.Contains("Level"))
+        //una vez que entra por segunda vez al nivel 1, si estra a esta funcion cuando lo carga.
+        if(instance != this)
+            return;
+        
+        if (scene.name != "Level1" && scene.name != "seleccionarPowerUp")
         {
             GameObject[] gameInterfaces = FindObjectsByName("interface");
         
             foreach(GameObject inter in gameInterfaces)
             {
                 if(gameInterface != inter)
+                {
                     Destroy(inter);
+                }
             }
 
             gameInterface.SetActive(true);
+
             powerManager.checkPower();
         }
     }
@@ -134,7 +142,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator nextLevelRutine(string nextScene)
     {
-        yield return new WaitForSeconds(3f);
+        
+        ManagerSound.instance.PlaySFX(soundWin,false);
+        yield return new WaitForSeconds(5.2f);
         panelFinishLevel.SetActive(false);
         
         foreach(Transform children in panelFinishLevel.transform)

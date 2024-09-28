@@ -532,6 +532,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d3556d5e3b6d74088c5f223308a9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveUI: {fileID: 8300000, guid: 48ebc7fd5caf0a043a2e7addd6f12782, type: 3}
+  selectOption: {fileID: 8300000, guid: e0604930cd127ad4db8c119bca1b97f1, type: 3}
   interfacePower: {fileID: 1812279661}
   generatorPowers: {fileID: 173799839}
   listNewPowerContainer:

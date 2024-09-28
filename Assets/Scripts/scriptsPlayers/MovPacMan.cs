@@ -17,9 +17,14 @@ public class MovPacMan : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         checkInput();
+        
+    }
+
+    private void FixedUpdate()
+    {
         move();
     }
 
@@ -119,12 +124,6 @@ public class MovPacMan : MonoBehaviour
         float nodeTarget = distanceForNode(targetNode.transform.position);
         float nodeToSelf = distanceForNode(transform.localPosition);
         return nodeToSelf > nodeTarget;
-    }
-
-    // llamado cuando pierde una vida
-    public void resetMov()
-    {
-
     }
 
     private float distanceForNode(Vector2 targetPosition)

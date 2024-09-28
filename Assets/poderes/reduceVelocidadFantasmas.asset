@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd726a91ee4563469033e566bee6b51, type: 3}
   m_Name: reduceVelocidadFantasmas
   m_EditorClassIdentifier: 
-  nameBuff: 
+  nameBuff: SPEED-G
   compatibilityPower: {fileID: 0}
   icon: {fileID: 22965080, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   probability: 0

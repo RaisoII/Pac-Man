@@ -4,20 +4,16 @@ using UnityEngine;
 
 public class Node : MonoBehaviour
 {
-    [SerializeField] private Node[] neighbors;
+    [SerializeField] private List<Node> neighbors;
     [SerializeField] private Node portalNode;
     private Vector2[] possibleDirections;
-    
-    void Start()
-    {
-        searchDirections();
-    }
 
-    private void searchDirections()
+    public void setNeighbor(Node n) => neighbors.Add(n); 
+    public void searchDirections()
     {
-        possibleDirections = new Vector2[neighbors.Length];
+        possibleDirections = new Vector2[neighbors.Count];
 
-        for(int i = 0; i < neighbors.Length; i++)
+        for(int i = 0; i < neighbors.Count; i++)
         {
             Node neighbor = neighbors[i];
             Vector2 distance = neighbor.transform.position - transform.position;
@@ -26,7 +22,7 @@ public class Node : MonoBehaviour
     }
 
     public Vector2[] getPossibleDirections() => possibleDirections;
-    public Node[] getNeightbors() => neighbors; 
+    public List<Node> getNeightbors() => neighbors; 
     
     public Node getNeightbor(Vector2 dir)
     {

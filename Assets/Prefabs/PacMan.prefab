@@ -186,5 +186,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eatOpenSound: {fileID: 8300000, guid: 6f07276de5715184bbf18d757d50711a, type: 3}
-  eatCycleSound: {fileID: 8300000, guid: bd5e42ee3b54a2544894967841615de6, type: 3}
   eatCloseSound: {fileID: 8300000, guid: 714599625560d0e48b92591f33e7efd1, type: 3}
+  eatGhost: {fileID: 0}

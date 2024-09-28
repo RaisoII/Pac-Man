@@ -9,7 +9,7 @@ public class IncrementSpeedPacMan : Buff
 
     public override void generateParametersRandoms()
     {
-        speedPacMan = getBiasedRandom(1,100);
+        speedPacMan = getBiasedRandom(1,20);
         description =  "increases PacMan speed by <color=green>"+speedPacMan+"%</color>";
     }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63def5fe56afd2a429f5175e7047e324, type: 3}
   m_Name: IncrementaVelocidadPacMan
   m_EditorClassIdentifier: 
-  nameBuff: 
+  nameBuff: SPEED-MAN
   compatibilityPower: {fileID: 0}
   icon: {fileID: -1493976556, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
   probability: 0

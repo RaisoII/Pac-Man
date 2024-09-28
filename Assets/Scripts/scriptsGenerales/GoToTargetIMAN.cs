@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GoToTargetIMAN : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    private float speed;
+    
+    private float variation;
     private GameObject target;
 
 
 
-    public void setTarget(GameObject target, float speed)
+    public void setTarget(GameObject target, float speed,float variation)
     {
         this.target = target;
-        this.speed = speed;
+        this.speed = Random.Range(speed - variation,speed + variation);
         StartCoroutine(goTarget());
     }
 

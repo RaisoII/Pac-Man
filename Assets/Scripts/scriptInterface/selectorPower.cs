@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class selectorPower : MonoBehaviour
 {
+    [SerializeField] private AudioClip moveUI,selectOption;
     [SerializeField] private GameObject interfacePower;
     // son putas listas porque el "boton" de continuar estará y... no estará. porque de lo contrario usaría arreglos
     [SerializeField] private GeneratorPowers generatorPowers; 
@@ -104,6 +105,7 @@ public class selectorPower : MonoBehaviour
         {
             unfocusContainer();
             setPower();
+            ManagerSound.instance.PlaySFX(selectOption,false);
         }
         else // si estoy en la seccion de acomodar poderes 
         {
@@ -120,6 +122,7 @@ public class selectorPower : MonoBehaviour
             {
                 interfacePower.SetActive(false);
                 gamerManager.nextLevel();
+                ManagerSound.instance.PlaySFX(selectOption,false);
             }
             else
                 changedPositionPower();
@@ -156,6 +159,8 @@ public class selectorPower : MonoBehaviour
             objectPowerInsert.SetActive(false);
             focusContainer(false);
         }
+        
+        ManagerSound.instance.PlaySFX(moveUI,false);
     }
 
     private void checkDecision()
@@ -178,7 +183,6 @@ public class selectorPower : MonoBehaviour
             generatorPowers.showInfoPower();
             listPowerContainer.Add(objectContinue);
             currentIcon = null;
-
         }
         else
         {
@@ -188,6 +192,8 @@ public class selectorPower : MonoBehaviour
             rect.anchoredPosition = new Vector2(rectCurrent.anchoredPosition.x,rectCurrent.anchoredPosition.y - 100);
             objectPowerInsert.SetActive(true);
         }
+        
+        ManagerSound.instance.PlaySFX(selectOption,false);
     }
 
     private void setPower()
@@ -260,6 +266,8 @@ public class selectorPower : MonoBehaviour
             currentIcon = generatorPowers.getInterfaceIcon(indexContainer);
             textDescription.text ="     "+currentIcon.getName +"\n\n"+currentIcon.getDescription;
         }
+
+        ManagerSound.instance.PlaySFX(moveUI,false);
     }
 
     private void unfocusContainer()
@@ -351,6 +359,8 @@ public class selectorPower : MonoBehaviour
             listPowerContainer.Add(objectContinue);
             objectPowerInsert.SetActive(false);
         }
+
+        ManagerSound.instance.PlaySFX(moveUI,false);
     }
 
     private void focusContainer(bool unfocusPrevious)

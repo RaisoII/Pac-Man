@@ -100,8 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   timeWaiting: 1
-  timeMaxScatter: 10
-  timeMaxChasing: 20
+  timeMaxScatter: 2
+  timeMaxChasing: 100
   render: {fileID: 7119305997650538617}
 --- !u!61 &-3513141929106128603
 BoxCollider2D:
