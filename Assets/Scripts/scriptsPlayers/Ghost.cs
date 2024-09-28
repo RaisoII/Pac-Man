@@ -17,7 +17,7 @@ public abstract class Ghost : MonoBehaviour
     protected Node[] patrolPath;
     protected int previousState; // 0-persecusión 1-dispersion 
     protected Coroutine currentRutine;
-    protected Color originalColor;
+    //protected Color originalColor;
     protected bool inGhostHouse;
     public event Action OnReachedDestination,checkDistancePacMan;
 
@@ -38,7 +38,7 @@ public abstract class Ghost : MonoBehaviour
     
     protected virtual void Awake()
     {
-        originalColor = render.color;
+        //originalColor = render.color;
         startPath = new List<Node>();
     }
 
@@ -413,7 +413,7 @@ public abstract class Ghost : MonoBehaviour
             if(currentState == GhostState.Frightened)
             {
                 OnReachedDestination?.Invoke();
-                render.color = originalColor;
+                //render.color = originalColor;
                 ChangedState(GhostState.Chasing);
                 speed = speed * 2f;
             }
@@ -428,7 +428,7 @@ public abstract class Ghost : MonoBehaviour
         if(currentRutine != null)
             StopCoroutine(currentRutine);
         
-        render.color = originalColor;
+        //render.color = originalColor;
         targetVector = houseNode.transform.position; 
         ChangedState(GhostState.Death);
     }
@@ -499,4 +499,7 @@ public abstract class Ghost : MonoBehaviour
     public void setPacman(GameObject pacMan) => movPacMan = pacMan.GetComponent<MovPacMan>();
 
     public Vector2 getDirection() => direction;
+
+    public bool getScared() => (currentState == GhostState.Frightened);
+    public bool getDead() => (currentState == GhostState.Death);
 }

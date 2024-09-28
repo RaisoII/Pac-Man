@@ -6,7 +6,7 @@ public class GhostBlinky : Ghost
 {
     protected override void Awake()
     {
-        originalColor = render.color;
+        //originalColor = render.color;
         OnReachedDestination += HandleReachedDestination;
     }
 

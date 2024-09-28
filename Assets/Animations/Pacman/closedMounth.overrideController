@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: closedMounth
+  m_Controller: {fileID: 9100000, guid: d82550c318f0e4b48a863a3df95737ef, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d693a19b5be0df240bc5e5a7573df334, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 84eec4a41e787674e9a8315e744f4fdc, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f333a7f94dc6d77489d45540f1da1fe4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 603d6e74276ff424cbc9178578705bdb, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ae0aff3ae90100747af2c85b123f6505, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: db90b1e03cb51904d954a312dabb499f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 640f4e43dd0be684c9a9c88c1b96dd63, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 640f4e43dd0be684c9a9c88c1b96dd63, type: 2}
