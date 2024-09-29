@@ -70,8 +70,14 @@ public class LevelManager : MonoBehaviour
         movPac.resetPositionAndDirection();
 
         foreach(GameObject pacDots in arrayPacDots)
-            pacDots.GetComponent<PacDots>().restartPosition();
+        {
+            PacDots pac = pacDots.GetComponent<PacDots>();
+            if(pac == null)
+                Debug.Log(pacDots.name+ " es nulo");
+            pac.restartPosition();
 
+        }
+            
         List<GameObject> prefabFire = GameObject.FindGameObjectsWithTag("Fire").ToList();
         while(prefabFire.Count > 0)
         {
@@ -90,6 +96,7 @@ public class LevelManager : MonoBehaviour
         
         foreach(Ghost g in ghostArray)
         {
+            g.relive();
             g.startWaiting();
 
             if(isFirstTimeStart)
