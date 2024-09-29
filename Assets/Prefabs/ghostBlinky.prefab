@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: -3124614640522713980}
   - component: {fileID: -3513141929106128603}
   - component: {fileID: 3604110609898511966}
+  - component: {fileID: 1561395918109047258}
   m_Layer: 0
   m_Name: ghostBlinky
   m_TagString: Ghost
@@ -159,7 +160,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -144694534, guid: fb4ba54721e6a0b4f94b8a5fbe96880d, type: 3}
+  m_Sprite: {fileID: -1459837535, guid: e792999a09781044bb0e57db9ec84f43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -182,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4001287e6f407f40a73f95c51937bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animGhost: {fileID: 1561395918109047258}
   speed: 3
   timeWaiting: 1
   timeMaxScatter: 2
@@ -222,7 +224,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -253,3 +255,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1561395918109047258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2535531929531381989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5d91ab809f9ba41903c9cb5ebc336b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

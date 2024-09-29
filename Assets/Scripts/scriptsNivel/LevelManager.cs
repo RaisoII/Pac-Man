@@ -160,9 +160,8 @@ public class LevelManager : MonoBehaviour
         foreach(Ghost ghost in ghostArray)
             ghost.ChangedStateFrightened(false);
         
-        
-                ManagerSound.instance.StopAudioLoop();
-                ManagerSound.instance.PlaySFX(soundNormalGhost,true);
+        ManagerSound.instance.StopAudioLoop();
+        ManagerSound.instance.PlaySFX(soundNormalGhost,true);
     }
     
     private IEnumerator restartGameRoutine()

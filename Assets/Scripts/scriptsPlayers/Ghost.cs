@@ -6,6 +6,8 @@ using System.Linq;
 
 public abstract class Ghost : MonoBehaviour
 {
+    
+    [SerializeField] protected animationControllerGhost animGhost;
     [SerializeField] private float speed;
     [SerializeField] protected float timeWaiting,timeMaxScatter,timeMaxChasing;
     [SerializeField] protected SpriteRenderer render;
@@ -38,6 +40,7 @@ public abstract class Ghost : MonoBehaviour
     
     protected virtual void Awake()
     {
+        animGhost = gameObject.GetComponent<animationControllerGhost>();
         //originalColor = render.color;
         startPath = new List<Node>();
     }
@@ -366,32 +369,6 @@ public abstract class Ghost : MonoBehaviour
 
         return currentNode.getNeightbor(direction);
         
-        /*foreach(Node neightbor in neightbors)
-        {
-            Vector2 directionNode = currentNode.getDirectionNode(neightbor);
-        
-            if(equalsDirection)
-            {
-                if(directionNode != -1*direction) // si la direccion del nodo es distinta a la direccion de la que vengo
-                    newDirection = directionNode;
-                else
-                    continue; 
-            }
-            else
-                newDirection = directionNode;
-            
-            float distance = getDistance(neightbor.gameObject.transform.position,targetVector);
-
-            if(distance < minimalDistance)
-            {
-                directionAux = newDirection;
-                idealNode = neightbor;
-                minimalDistance = distance; 
-            }
-        }
-
-        direction = directionAux;*/
-        //return idealNode;
     }
 
     public void ChangedStateFrightened(bool active)
@@ -400,7 +377,7 @@ public abstract class Ghost : MonoBehaviour
         {
             if(currentState != GhostState.Frightened && currentState !=  GhostState.Death)
             {
-                render.color = Color.blue;
+                animGhost.setScared(true);
                 if(!inGhostHouse)
                     ChangedState(GhostState.Frightened);
                 else
@@ -412,8 +389,8 @@ public abstract class Ghost : MonoBehaviour
         {
             if(currentState == GhostState.Frightened)
             {
+                animGhost.setScared(false);
                 OnReachedDestination?.Invoke();
-                //render.color = originalColor;
                 ChangedState(GhostState.Chasing);
                 speed = speed * 2f;
             }
@@ -422,13 +399,13 @@ public abstract class Ghost : MonoBehaviour
 
     public void deathGhost()
     {
+        animGhost.setDead(true);
         speed = speed * 4f;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         
         if(currentRutine != null)
             StopCoroutine(currentRutine);
         
-        //render.color = originalColor;
         targetVector = houseNode.transform.position; 
         ChangedState(GhostState.Death);
     }
@@ -461,6 +438,7 @@ public abstract class Ghost : MonoBehaviour
 
         speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
 
+        animGhost.setDead(false);
         targetVector = houseNode.transform.position;
         
         while(HasReachedDestination(targetVector))

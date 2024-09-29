@@ -22,16 +22,21 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("holaaaaaa sooyyy yoooo???");
         // Implementación del patrón Singleton para evitar duplicados
         if (instance == null)
         {
+            Debug.Log("soy yo, no me destruyo");
             instance = this;
             DontDestroyOnLoad(gameObject); // Evita que el GameObject se destruya al cambiar de escena
              // Verificamos si hay otra instancia de gameInterface ya en DontDestroyOnLoad
             DontDestroyOnLoad(gameInterface);
         }
         else
+        {
+            Debug.Log("se destruye el muy pajero hijo de re mil puta");
             Destroy(gameObject); // Destruye cualquier duplicado que se cree
+        }
         
         cantTimeFrightened = 0;
         cantSpeedPacman = 0;

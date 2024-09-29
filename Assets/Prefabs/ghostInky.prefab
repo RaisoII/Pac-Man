@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4466738392184507057}
   - component: {fileID: -2980911183266492060}
   - component: {fileID: -2654208775066422007}
+  - component: {fileID: 2967355192236289817}
   m_Layer: 0
   m_Name: ghostInky
   m_TagString: Ghost
@@ -100,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697f1560c6f31904c87400a4f7e4f7b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animGhost: {fileID: 2967355192236289817}
   speed: 3
   timeWaiting: 5
   timeMaxScatter: 10
@@ -171,6 +173,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2967355192236289817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8382287332790665087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f5d91ab809f9ba41903c9cb5ebc336b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8443744659228144560
 GameObject:
   m_ObjectHideFlags: 0
