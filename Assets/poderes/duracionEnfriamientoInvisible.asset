@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameBuff: EXTEND INVISIBLE-MAN
   compatibilityPower: {fileID: 11400000, guid: cb3358654b0fe624a991bb19897f3f78, type: 2}
-  icon: {fileID: -1293663405, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
+  icon: {fileID: 300811917, guid: 9170c1543eb81f640a4eb36e721eb587, type: 3}
   probability: 0
   incrementDuration: 0
   reductionCoolDown: 0

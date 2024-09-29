@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameBuff: COOLDOWN I-MAN
   compatibilityPower: {fileID: 11400000, guid: 915f6ef9ccfe002448f3d1048269d93a, type: 2}
-  icon: {fileID: -896347700, guid: a51b56ee28d8a3745bbf141eb9fe5517, type: 3}
+  icon: {fileID: -1849822225, guid: 9170c1543eb81f640a4eb36e721eb587, type: 3}
   probability: 0
   decrementCoolDown: 0
