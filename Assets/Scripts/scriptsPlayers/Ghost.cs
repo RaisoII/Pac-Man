@@ -397,9 +397,12 @@ public abstract class Ghost : MonoBehaviour
         }
     }
 
+
+
     public void deathGhost()
     {
         animGhost.setDead(true);
+        animGhost.setScared(false);
         speed = speed * 4f;
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         
@@ -410,11 +413,22 @@ public abstract class Ghost : MonoBehaviour
         ChangedState(GhostState.Death);
     }
 
+    public void relive()
+    {
+        if(currentState != GhostState.Death)
+            return;
+        gameObject.GetComponent<BoxCollider2D>();
+         speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
+        animGhost.setDead(false);
+    }
+
     private IEnumerator returnHouse()
     {
+        direction = Vector2.zero; // calculateNextNode(false), no funciona en muchos casos, entra en loop entre dos nodos
+        
         while(HasReachedDestination(houseNode.transform.position))
         {
-            nextNode = calculateNextNode(false);
+            nextNode = calculateNextNode(true);
         
             while(HasReachedDestination(nextNode.transform.position))
             {
