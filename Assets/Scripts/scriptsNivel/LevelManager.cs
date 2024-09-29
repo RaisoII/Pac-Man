@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour
     private int cantPacDots;
     private int cantPacDotsConsume;
     private bool isFirstTimeStart;
+    private ManagerKeys managerKeys;
+
     private void Awake()
     {
         isFirstTimeStart = true;
@@ -30,7 +32,10 @@ public class LevelManager : MonoBehaviour
 
         spawn = gameObject.GetComponent<SpawnerManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        managerKeys = gameManager.GetComponent<ManagerKeys>();
+        
         spawn.instantiatePrefabs();
+    
         List<GameObject> listGhost = spawn.getListGhost();
         ghostArray = new Ghost[listGhost.Count];
         
@@ -88,20 +93,19 @@ public class LevelManager : MonoBehaviour
             g.startWaiting();
 
             if(isFirstTimeStart)
-            {
                 g.findPathStart();
-                isFirstTimeStart = false;
-            }
 
             g.enabled = true;
         }
         
+        isFirstTimeStart = false;
         
         movPac.gameObject.GetComponent<BoxCollider2D>().enabled = true;
         movPac.enabled = true;
         movPac.startMove();
 
         gameManager.startGame();
+        managerKeys.enabled = true;
     }
     public void deletePacDot(bool activeFrightened,GameObject pacDot)
     {
@@ -137,7 +141,7 @@ public class LevelManager : MonoBehaviour
     private void instantiateText()
     {
         Vector2 dirPacMan = -1*movPac.getDirection();
-        Vector2 posText = (Vector2)movPac.gameObject.transform.localPosition + dirPacMan;
+        Vector2 posText = (Vector2)movPac.gameObject.transform.localPosition + dirPacMan + new Vector2(0,0.5f); // un poco mas arriba
         GameObject objectText = Instantiate(prefabText,posText,Quaternion.identity);
         objectText.GetComponent<DisappearText>().setCant(cantPacDotsConsume);
     }
@@ -173,12 +177,17 @@ public class LevelManager : MonoBehaviour
 
     public void deathPacMan()
     { 
-        
+        managerKeys.enabled = false;
         GameObject pacMan = movPac.gameObject;
         pacMan.GetComponent<BoxCollider2D>().enabled = false;
-        foreach(Transform child in pacMan.transform)
+        Transform TpacMan = pacMan.transform; 
+        
+        for(int i = 3; i < TpacMan.childCount; i++)
+        {
+            Transform child = TpacMan.GetChild(i);
             Destroy(child.gameObject);
-
+        }
+        
         stopMovPacDots();
         enabledMovementPrefabs(false);
         bool continueGame =  gameManager.removeOneLive();

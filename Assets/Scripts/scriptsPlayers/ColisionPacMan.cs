@@ -5,7 +5,13 @@ using UnityEngine;
 public class ColisionPacMan : MonoBehaviour
 {
     [SerializeField] private AudioClip eatOpenSound, eatCloseSound,eatGhost;  // Sonido de abrir
+    [SerializeField] private animationController animPacMan;
+    private List<string> tagsDetection;
 
+    private void Awake()
+    {
+        tagsDetection = new List<string>{"pacDots","Ghost"};
+    }
     private bool isEating = false; // Indica si Pac-Man está comiendo
 
     private LevelManager levelManager;
@@ -14,6 +20,9 @@ public class ColisionPacMan : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if(!tagsDetection.Contains(col.tag))
+            return;
+        
         if(col.CompareTag("pacDots"))
         {
             bool activeFrightened = col.gameObject.GetComponent<PacDots>().getactiveFrightened();
@@ -29,7 +38,7 @@ public class ColisionPacMan : MonoBehaviour
                 ManagerSound.instance.PlaySFX(eatCloseSound,false);
                 isEating = false;
             }
-
+            animPacMan.changedAnimationEating(isEating);
             Destroy(col.gameObject);
         }
         else if(col.CompareTag("Ghost"))
@@ -41,7 +50,10 @@ public class ColisionPacMan : MonoBehaviour
                 col.gameObject.GetComponent<Ghost>().deathGhost();
             }
             else
+            {
+                animPacMan.deathPacMan(true);
                 levelManager.deathPacMan();
+            }
         }
     }
 
@@ -50,6 +62,10 @@ public class ColisionPacMan : MonoBehaviour
         this.eatOpenSound = eatOpenSound;
         this.eatCloseSound = eatCloseSound;
     }
+
+    public void setTag(string tag) => tagsDetection.Add(tag);
+
+    public void removeTag(string tag) => tagsDetection.Remove(tag);
 
     public bool getEating() => isEating;
 }

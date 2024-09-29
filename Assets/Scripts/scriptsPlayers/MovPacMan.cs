@@ -8,8 +8,9 @@ public class MovPacMan : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] protected Vector2 direction;
     [SerializeField] private Vector2 nextDirection;
+    [SerializeField] private animationController animPacMan;
     private Node startNode,currentNode,previousNode,targetNode;
-    // Start is called before the first frame update
+
     void Start()
     {
         direction = Vector2.left;
@@ -71,6 +72,8 @@ public class MovPacMan : MonoBehaviour
                 currentNode = null;
             }
         }
+
+        animPacMan.changedAnimationDirection(nextDirection);
     }
 
     private void move()
@@ -143,6 +146,7 @@ public class MovPacMan : MonoBehaviour
         targetNode = currentNode;
         direction = Vector2.left;
         nextDirection = Vector2.left;
+        animPacMan.deathPacMan(false);
     }
 
     public void startMove() => changedPosition(direction);

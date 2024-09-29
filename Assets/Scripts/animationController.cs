@@ -1,53 +1,86 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class animationController : MonoBehaviour {
-    //[SerializeField] public GameObject heart, heartB, eyes, eyesClosed;
-    private Rigidbody2D rb;
-    private Animator animator;
-    [SerializeField] private MovPacMan movPacMan;
+    
+    private Animator animator,animBocaAbierta,animBocaCerrada;
     [SerializeField] private Vector2 direction;
     [SerializeField] private GameObject bocaAbierta, bocaCerrada;
-    [SerializeField] private bool eating;
 
-    void Start() {
+    void Awake() {
+        
         animator = GetComponent<Animator>();
-        bocaCerrada.SetActive(true);
-        bocaAbierta.SetActive(false);   
+        animBocaAbierta = bocaAbierta.GetComponent<Animator>();
+        animBocaCerrada = bocaCerrada.GetComponent<Animator>();  
+        direction = Vector2.left;
     }
 
-    void Update(){// Crear el vector de movimiento
-    }
-
-    void FixedUpdate()
+    public void changedAnimationEating(bool eating)
     {
-        eating = movPacMan.getEating();
-        direction = movPacMan.getDirection();
-        if ((Mathf.Abs(direction.x) == 1) && (direction.y == 0)){
+        if(direction != Vector2.up)
+        {
+            bocaAbierta.SetActive(eating);
+            bocaCerrada.SetActive(!eating);
+        }
+        
+        changedPositionEat();
+    }
+
+    private void changedPositionEat()
+    {
+        animBocaAbierta.SetFloat("horizontal", direction.x);
+        animBocaAbierta.SetFloat("vertical", direction.y);
+        animBocaCerrada.SetFloat("horizontal", direction.x);
+        animBocaCerrada.SetFloat("vertical", direction.y);
+    }
+
+    public void changedAnimationDirection(Vector2 direction)
+    {
+        this.direction = direction;
+        if ((Mathf.Abs(direction.x) == 1) && (direction.y == 0))
+        {
             animator.SetFloat("horizontal", direction.x);
             animator.SetFloat("vertical", 0);
-        }
-        if ((direction.x == 0) && (Mathf.Abs(direction.y) == 1)){
+            animBocaAbierta.gameObject.SetActive(true);
+            animBocaCerrada.gameObject.SetActive(true);
+
+        }else
+        {
             animator.SetFloat("horizontal", 0);
             animator.SetFloat("vertical", direction.y);
+
+            if ((direction.x == 0) && (direction.y == 1))
+            {
+                bocaAbierta.gameObject.SetActive(false);
+                bocaCerrada.gameObject.SetActive(false);
+            }
+            else
+            {
+                bocaAbierta.gameObject.SetActive(true);
+                bocaCerrada.gameObject.SetActive(true);
+            }
         }
-        if(direction.y == 1 && direction.x == 0)
+
+        changedPositionEat();
+    }
+
+    // entra al iniciar y reiniciar el nivel
+
+    public void deathPacMan(bool dead)
+    {
+        if(dead)
         {
             bocaAbierta.SetActive(false);
             bocaCerrada.SetActive(false);
         }
         else
         {
-            bocaAbierta.SetActive(eating);
-            bocaCerrada.SetActive(!eating);
+            direction = Vector2.left;
+            bocaCerrada.SetActive(true);
+            changedAnimationDirection(direction);
         }
-       
-            
-        bocaAbierta.GetComponent<Animator>().SetFloat("horizontal", direction.x);
-        bocaAbierta.GetComponent<Animator>().SetFloat("vertical", direction.y);
-        bocaCerrada.GetComponent<Animator>().SetFloat("horizontal", direction.x);
-        bocaCerrada.GetComponent<Animator>().SetFloat("vertical", direction.y);
+
+        animator.SetBool("dead", dead);
     }
 }
