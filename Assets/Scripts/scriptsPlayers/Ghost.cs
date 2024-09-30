@@ -417,7 +417,7 @@ public abstract class Ghost : MonoBehaviour
     {
         if(currentState != GhostState.Death)
             return;
-        gameObject.GetComponent<BoxCollider2D>();
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
          speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
         animGhost.setDead(false);
     }

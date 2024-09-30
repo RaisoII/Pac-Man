@@ -47,6 +47,6 @@ public class MenuManager : MonoBehaviour
 
     public void listenerPlay()
     {
-        SceneManager.LoadScene("Level2");
+        SceneManager.LoadScene("Level1");
     }
 }

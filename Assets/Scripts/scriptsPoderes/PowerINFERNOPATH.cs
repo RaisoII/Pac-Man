@@ -32,12 +32,13 @@ public class PowerINFERNOPATH : MonoBehaviour,powerObject
 
     private IEnumerator spawnFire()
     {
-        speedPacMan = GameObject.FindWithTag("PacMan").GetComponent<MovPacMan>().getSpeed();
+        MovPacMan movPac = GameObject.FindWithTag("PacMan").GetComponent<MovPacMan>(); 
+        speedPacMan = movPac.getSpeed();
         float spawnDelay = Mathf.Lerp(maxSpawnDelay, minSpawnDelay, speedPacMan); // Interpolación entre los delays
         
         while (true)
         {
-            Vector2 posFire =new Vector2(transform.position.x, transform.position.y);
+            Vector2 posFire =new Vector2(transform.position.x, transform.position.y) - .5f* movPac.getDirection();
             GameObject fire = Instantiate(prefabFire,posFire, Quaternion.identity);
             fire.GetComponent<ColisionFire>().setTimeFire(timeFire);
             

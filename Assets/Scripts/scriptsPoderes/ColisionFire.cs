@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class ColisionFire : MonoBehaviour
 {
+    [SerializeField] private Animator anim;
     private float timeFire;
 
     private IEnumerator timeRutine()
     {
-        yield return new WaitForSeconds(timeFire);
+        while(timeFire > 0)
+        {
+            timeFire -= Time.deltaTime;
+            anim.SetFloat("duration",timeFire); 
+            yield return null;
+        }
+
         Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.CompareTag("Ghost"))
         {
-            Debug.Log("hola xD");
             Ghost ghost = col.gameObject.GetComponent<Ghost>();
             if(ghost.getGhostState() != Ghost.GhostState.Frightened)
                 col.gameObject.GetComponent<Ghost>().deathGhost();
@@ -25,6 +31,7 @@ public class ColisionFire : MonoBehaviour
     public void setTimeFire(float time)
     {
         timeFire = time;
+        anim.SetFloat("duration",timeFire); 
         StartCoroutine(timeRutine());
     }
 }

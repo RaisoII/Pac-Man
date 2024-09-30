@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edec4e0db93c43f4cb3bb00de29b1b9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabFire: {fileID: 8975323587454078769, guid: acc38f2604680f24b911443c2c514135, type: 3}
+  prefabFire: {fileID: 909860483164392219, guid: acc38f2604680f24b911443c2c514135, type: 3}
   timeFire: 3
   maxSpawnDelay: 1
   minSpawnDelay: 0.1
