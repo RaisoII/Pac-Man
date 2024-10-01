@@ -802,8 +802,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a8902e2d54b060e46bbfd814d7380a90, type: 2}
-  m_sharedMaterial: {fileID: -9058946847059239037, guid: a8902e2d54b060e46bbfd814d7380a90, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b123386c3b44a1347bea1222fd46f746, type: 2}
+  m_sharedMaterial: {fileID: 3156083894251589515, guid: b123386c3b44a1347bea1222fd46f746, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
