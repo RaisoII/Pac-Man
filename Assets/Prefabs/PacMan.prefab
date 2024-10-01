@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e557d0df38c87746be1e2d46d8907fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 2.9
   direction: {x: 0, y: 0}
   nextDirection: {x: 0, y: 0}
   animPacMan: {fileID: 1823234486265423361}
