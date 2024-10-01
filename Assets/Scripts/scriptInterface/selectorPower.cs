@@ -402,7 +402,7 @@ public class selectorPower : MonoBehaviour
         rectDescription.anchoredPosition = new Vector2(rectCurrent.anchoredPosition.x,
                                                         rectCurrent.anchoredPosition.y + displacementText);
         
-        objectPowerInsert.GetComponent<RectTransform>().anchoredPosition = new Vector2(rectCurrent.anchoredPosition.x,rectCurrent.anchoredPosition.y - 100);
+        objectPowerInsert.GetComponent<RectTransform>().anchoredPosition = new Vector2(rectCurrent.anchoredPosition.x,rectCurrent.anchoredPosition.y - 75);
         previousContainer = currentContainer;
     }
 }

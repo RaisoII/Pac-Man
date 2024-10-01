@@ -7,7 +7,6 @@ using System.Linq;
 public abstract class Ghost : MonoBehaviour
 {
     [SerializeField] protected animationControllerGhost animGhost;
-    [SerializeField] private float speed;
     [SerializeField] protected float timeWaiting,timeMaxScatter,timeMaxChasing;
     [SerializeField] protected SpriteRenderer render;
     protected Node currentNode,nextNode,houseNode,startNode,endNode; // buclean entre estos dos al principio 
@@ -17,6 +16,8 @@ public abstract class Ghost : MonoBehaviour
     protected List<Node> startPath;
     protected Node[] patrolPath;
     protected int previousState; // 0-persecusión 1-dispersion 
+    private float speed;
+    private float speedIni;
     protected Coroutine currentRutine;
     //protected Color originalColor;
     protected bool inGhostHouse;
@@ -34,7 +35,7 @@ public abstract class Ghost : MonoBehaviour
 
     private void Start()
     {
-
+        speedIni = speed;
     }
     
     protected virtual void Awake()
@@ -398,13 +399,9 @@ public abstract class Ghost : MonoBehaviour
 
     public void deathGhost()
     {
+        speed = speedIni * 3f;
         animGhost.setDead(true);
         animGhost.setScared(false);
-        
-        if(speed == speed / 2f)
-            speed = speed * 4f;
-        else
-            speed = speed *2f;
 
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         
@@ -421,7 +418,7 @@ public abstract class Ghost : MonoBehaviour
             return;
 
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
-         speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
+        speed = speedIni; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
         animGhost.setDead(false);
     }
 
@@ -453,9 +450,8 @@ public abstract class Ghost : MonoBehaviour
 
         transform.position = targetVector;
 
-        speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
+        speed = speedIni; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
 
-        Debug.Log("");
         animGhost.setDead(false);
         targetVector = houseNode.transform.position;
         

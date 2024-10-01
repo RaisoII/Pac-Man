@@ -25,8 +25,6 @@ public class ColisionFire : MonoBehaviour
             Ghost ghost = col.gameObject.GetComponent<Ghost>();
             if(ghost.getGhostState() != Ghost.GhostState.Death)
             {
-                Debug.Break();
-                Debug.Log("mata fantasma "+col.gameObject.name);
                 ghost.deathGhost();
             }
         }

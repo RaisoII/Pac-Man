@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class TextBuffsInterface : MonoBehaviour
 {
     [SerializeField] private float fadeInDuration = 1f; // Tiempo de entrada
     [SerializeField] private float fadeOutDuration = 1f; // Tiempo de salida
     [SerializeField] private float displayDuration = 2f; // Tiempo que se queda visible
-    [SerializeField] private List<TextMeshProUGUI> listText; // Referencia al texto que querés animar
     [SerializeField] private LevelManager level;
     [SerializeField] private GameObject interfaceBuff;
+    [SerializeField] private List<int> listIntText;// Referencia al texto que querés animar
+    private List<TextMeshProUGUI> listText; 
+
     
     IEnumerator FadeTextList()
     {
@@ -59,6 +62,16 @@ public class TextBuffsInterface : MonoBehaviour
 
     public void showBuffs()
     {
+        listText = new List<TextMeshProUGUI>();
+        interfaceBuff = GameObject.Find("interface").transform.GetChild(3).gameObject;
+        
+        for( int i = 0; i < listIntText.Count; i++)
+        {
+            int index = listIntText[i];
+            TextMeshProUGUI text = interfaceBuff.transform.GetChild(index).gameObject.GetComponent<TextMeshProUGUI>();
+            listText.Add(text);
+        }
+
         interfaceBuff.SetActive(true);
         StartCoroutine(FadeTextList());
     } 
