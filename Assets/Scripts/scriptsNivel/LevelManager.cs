@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
     private ManagerKeys managerKeys;
     private void Awake()
     {
-        
+        ManagerSound.instance.StopAudioLoop();  // puede quedar un sonido loopeado del nivel anterior 
         isFirstTimeStart = true;
         cantPacDotsConsume = 0;
         cantPacDots = GameObject.FindGameObjectsWithTag("pacDots").Length;
@@ -45,13 +45,13 @@ public class LevelManager : MonoBehaviour
             GameObject ghost = listGhost[i];
             Ghost g = ghost.GetComponent<Ghost>();
             ghostArray[i] = g;
-            g.setSpeed(speedGhost + gameManager.getPercentageSpeedGhost());
+            g.setSpeed(speedGhost - (speedGhost * gameManager.getPercentageSpeedGhost()) / 100f);
         }
 
         movPac = spawn.getPacMan().GetComponent<MovPacMan>();
         ColisionPacMan colPac = spawn.getPacMan().GetComponent<ColisionPacMan>();
         colPac.setLevelManager(this);
-
+        movPac.enabled = false; // puede estar activado de otros niveles
         if(buffsGhost)
             textBuffs.showBuffs();
         else

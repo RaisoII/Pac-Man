@@ -56,7 +56,13 @@ public class Power : ScriptableObject,InterfaceIcon
 
     public Power Clone()=> ScriptableObject.Instantiate(this);
 
-    public void setTimeCoolDown(float time) => cooldown = time;
+    public void setTimeCoolDown(float time)
+    {
+      if(cooldown > 0)
+        cooldown = time;
+      else
+        cooldown = 1;
+    } 
     public void setTimeDuration(float duration) => this.duration = duration;
     public void setRadious(float radious) => this.radious = radious;
     public float getTimeCoolDown() => cooldown;

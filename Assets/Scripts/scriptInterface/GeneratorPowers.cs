@@ -71,10 +71,10 @@ public class GeneratorPowers : MonoBehaviour
             int random = Random.Range(0,100);
             if(random < 50)
                 generateBuff();
-            //else// if(random < 75)
-              //  generatePower();
-            //else
-              //  generateBuffPower();
+            else if(random < 75)
+                generatePower();
+            else
+                generateBuffPower();
         }
     } 
     

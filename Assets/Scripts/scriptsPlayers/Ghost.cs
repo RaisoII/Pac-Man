@@ -389,6 +389,7 @@ public abstract class Ghost : MonoBehaviour
             {
                 animGhost.setScared(false);
                 OnReachedDestination?.Invoke();
+                direction = Vector2.zero;
                 ChangedState(GhostState.Chasing);
                 speed = speed * 2f;
             }
