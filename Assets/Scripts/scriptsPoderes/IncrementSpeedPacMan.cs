@@ -9,7 +9,7 @@ public class IncrementSpeedPacMan : Buff
 
     public override void generateParametersRandoms()
     {
-        speedPacMan = getBiasedRandom(1,20);
+        speedPacMan = getBiasedRandom(1,5);
         description =  "increases PacMan speed by <color=green>"+speedPacMan+"%</color>";
     }
 
@@ -20,8 +20,10 @@ public class IncrementSpeedPacMan : Buff
 
         GameManager manager = ObjectGameManager.GetComponent<GameManager>();
         GeneratorPowers generator = objectScriptsGenerales.GetComponent<GeneratorPowers>();
-        
-        manager.cantSpeedPacman += speedPacMan;
+        GameObject pacMan = GameObject.FindGameObjectWithTag("PacMan");
+        MovPacMan movPac = pacMan.GetComponent<MovPacMan>();
+        movPac.setSpeed(movPac.getSpeed() +  (speedPacMan*movPac.getSpeed() )/ 100f);
+        manager.percentageSpeedPacMan += speedPacMan;
         generator.showInfoAtributes();
     }
 }

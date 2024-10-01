@@ -10,7 +10,7 @@ public class ReduceSpeedGhost : Buff
 
     public override void generateParametersRandoms()
     {
-        speedGhost = getBiasedRandom(1,20);
+        speedGhost = getBiasedRandom(1,5);
         description =  "reduces the speed of ghosts by <color=red>"+speedGhost+"% </color>";
     }
 
@@ -22,7 +22,7 @@ public class ReduceSpeedGhost : Buff
         GameManager manager = ObjectGameManager.GetComponent<GameManager>();
         GeneratorPowers generator = objectScriptsGenerales.GetComponent<GeneratorPowers>();
         
-        manager.cantSpeedGhost += speedGhost;
+        manager.percentageSpeedGhost += speedGhost;
         generator.showInfoAtributes();
     }
 }

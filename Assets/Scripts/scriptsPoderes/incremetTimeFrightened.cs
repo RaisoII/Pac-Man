@@ -23,7 +23,7 @@ public class incremetTimeFrightened : Buff
         GameManager manager = ObjectGameManager.GetComponent<GameManager>();
         GeneratorPowers generator = objectScriptsGenerales.GetComponent<GeneratorPowers>();
         
-        manager.cantTimeFrightened += timeFrightened;
+        manager.percentageTimeFrightened += timeFrightened;
         generator.showInfoAtributes();
     }
 }

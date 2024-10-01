@@ -16,7 +16,7 @@ MonoBehaviour:
   duration: 8
   cooldown: 1
   radious: -1
-  icon: {fileID: 1843289804, guid: 9170c1543eb81f640a4eb36e721eb587, type: 3}
+  icon: {fileID: 1927996686, guid: 353f88f7f8650654fb645b3d3c95c1ee, type: 3}
   description: "PacMan wraps himself in a cloak\nof invisibility,becoming intangible\nand
     eluding the presence of \nghosts like a shadow in the dark."
   prefab: {fileID: 6755274396155109915, guid: 26d1e47df57ac7d4dae2551af0b7b277, type: 3}

@@ -23,8 +23,12 @@ public class ColisionFire : MonoBehaviour
         if(col.CompareTag("Ghost"))
         {
             Ghost ghost = col.gameObject.GetComponent<Ghost>();
-            if(ghost.getGhostState() != Ghost.GhostState.Frightened)
-                col.gameObject.GetComponent<Ghost>().deathGhost();
+            if(ghost.getGhostState() != Ghost.GhostState.Death)
+            {
+                Debug.Break();
+                Debug.Log("mata fantasma "+col.gameObject.name);
+                ghost.deathGhost();
+            }
         }
     }
 

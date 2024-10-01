@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private float timeFrightenedRutine;
-    [SerializeField] private float timeWaiting;
+    [SerializeField] private float timeFrightenedRutine,speedGhost;
+    [SerializeField] private float timeWaitingStartGame;
     [SerializeField] private bool buffsGhost;
     [SerializeField] private TextBuffsInterface textBuffs;
     [SerializeField] private AudioClip soundStart,soundDeath,soundNormalGhost,soundFrigthenedGhost;
@@ -23,9 +23,9 @@ public class LevelManager : MonoBehaviour
     private int cantPacDotsConsume;
     private bool isFirstTimeStart;
     private ManagerKeys managerKeys;
-
     private void Awake()
     {
+        
         isFirstTimeStart = true;
         cantPacDotsConsume = 0;
         cantPacDots = GameObject.FindGameObjectsWithTag("pacDots").Length;
@@ -34,6 +34,7 @@ public class LevelManager : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         managerKeys = gameManager.GetComponent<ManagerKeys>();
         
+        timeFrightenedRutine += (timeFrightenedRutine * gameManager.getPercentageFrightened()) / 100f;
         spawn.instantiatePrefabs();
     
         List<GameObject> listGhost = spawn.getListGhost();
@@ -44,6 +45,7 @@ public class LevelManager : MonoBehaviour
             GameObject ghost = listGhost[i];
             Ghost g = ghost.GetComponent<Ghost>();
             ghostArray[i] = g;
+            g.setSpeed(speedGhost + gameManager.getPercentageSpeedGhost());
         }
 
         movPac = spawn.getPacMan().GetComponent<MovPacMan>();
@@ -89,7 +91,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator startGameRoutine()
     {
         ManagerSound.instance.PlaySFX(soundStart,false);
-        yield return new WaitForSeconds(timeWaiting);
+        yield return new WaitForSeconds(timeWaitingStartGame);
         
         if(ghostArray.Length > 0)
             ManagerSound.instance.PlaySFX(soundNormalGhost,true);
@@ -176,7 +178,7 @@ public class LevelManager : MonoBehaviour
         ManagerSound.instance.StopAudioLoop(); // para los sonidos en loop
         ManagerSound.instance.PlaySFX(soundDeath,false);
         gameManager.stopGame();
-        yield return new WaitForSeconds(timeWaiting);
+        yield return new WaitForSeconds(timeWaitingStartGame);
         resetPositions();
         StartCoroutine(startGameRoutine());
     }

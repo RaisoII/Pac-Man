@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameBuff: EXTEND INFERNO-PATH
   compatibilityPower: {fileID: 11400000, guid: 49cc2924fab9a384d8f4e2f9afba0d6a, type: 2}
-  icon: {fileID: -728998827, guid: 9170c1543eb81f640a4eb36e721eb587, type: 3}
+  icon: {fileID: -548138454, guid: 353f88f7f8650654fb645b3d3c95c1ee, type: 3}
   probability: 0
   incrementDuration: 0
   reductionCoolDown: 0

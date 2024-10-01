@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameBuff: SPEED-MAN
   compatibilityPower: {fileID: 0}
-  icon: {fileID: 1044298189, guid: 9170c1543eb81f640a4eb36e721eb587, type: 3}
+  icon: {fileID: -1222664991, guid: 353f88f7f8650654fb645b3d3c95c1ee, type: 3}
   probability: 0
   speedPacMan: 0

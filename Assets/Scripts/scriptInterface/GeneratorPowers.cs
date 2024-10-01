@@ -71,8 +71,8 @@ public class GeneratorPowers : MonoBehaviour
             int random = Random.Range(0,100);
             if(random < 50)
                 generateBuff();
-            else// if(random < 75)
-                generatePower();
+            //else// if(random < 75)
+              //  generatePower();
             //else
               //  generateBuffPower();
         }
@@ -159,17 +159,17 @@ public class GeneratorPowers : MonoBehaviour
 
     public void showInfoAtributes()
     {
-        textSpeedPacMan.text = gameManager.cantSpeedPacman+" %";
-        textSpeedGhost.text  = gameManager.cantSpeedGhost+" %";
-        textTimeFrightered.text = gameManager.cantTimeFrightened+ " s";
+        textSpeedPacMan.text = gameManager.percentageSpeedPacMan+" %";
+        textSpeedGhost.text  = gameManager.percentageSpeedGhost+" %";
+        textTimeFrightered.text = gameManager.percentageTimeFrightened+ " s";
 
-        if(gameManager.cantSpeedPacman > 0)
+        if(gameManager.percentageSpeedPacMan > 0)
             textSpeedPacMan.color = Color.green;
             
-        if(gameManager.cantSpeedGhost > 0)
+        if(gameManager.percentageSpeedGhost > 0)
             textSpeedGhost.color = Color.red;
             
-        if(gameManager.cantTimeFrightened > 0)
+        if(gameManager.percentageTimeFrightened > 0)
             textTimeFrightered.color = Color.green;
     }
 

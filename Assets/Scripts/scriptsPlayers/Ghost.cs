@@ -6,7 +6,6 @@ using System.Linq;
 
 public abstract class Ghost : MonoBehaviour
 {
-    
     [SerializeField] protected animationControllerGhost animGhost;
     [SerializeField] private float speed;
     [SerializeField] protected float timeWaiting,timeMaxScatter,timeMaxChasing;
@@ -286,7 +285,6 @@ public abstract class Ghost : MonoBehaviour
         else if(currentState == GhostState.Death)
             changedNextNode(nextNode.transform.position,houseNode.transform.position);
 
-        Debug.Log("mas cercano: "+nextNode.transform.position);
         while (HasReachedDestination(nextNode.transform.position))
         {
             Move(nextNode.transform.position);
@@ -397,13 +395,16 @@ public abstract class Ghost : MonoBehaviour
         }
     }
 
-
-
     public void deathGhost()
     {
         animGhost.setDead(true);
         animGhost.setScared(false);
-        speed = speed * 4f;
+        
+        if(speed == speed / 2f)
+            speed = speed * 4f;
+        else
+            speed = speed *2f;
+
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         
         if(currentRutine != null)
@@ -417,6 +418,7 @@ public abstract class Ghost : MonoBehaviour
     {
         if(currentState != GhostState.Death)
             return;
+
         gameObject.GetComponent<BoxCollider2D>().enabled = true;
          speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
         animGhost.setDead(false);
@@ -452,6 +454,7 @@ public abstract class Ghost : MonoBehaviour
 
         speed = speed / 2f; // no divido por 4 porque ya venía dividendo por 2 (en el modo asustado)
 
+        Debug.Log("");
         animGhost.setDead(false);
         targetVector = houseNode.transform.position;
         
@@ -490,8 +493,5 @@ public abstract class Ghost : MonoBehaviour
 
     public void setPacman(GameObject pacMan) => movPacMan = pacMan.GetComponent<MovPacMan>();
 
-    public Vector2 getDirection() => direction;
-
-    public bool getScared() => (currentState == GhostState.Frightened);
-    public bool getDead() => (currentState == GhostState.Death);
+    public void setSpeed(float cantSpeed) => speed = cantSpeed;
 }
