@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("se destruye el muy pajero hijo de re mil puta");
             Destroy(gameObject); // Destruye cualquier duplicado que se cree
         }
         
@@ -106,6 +105,7 @@ public class GameManager : MonoBehaviour
         cantDeaths++;
         if(cantDeaths == lifes.Length)
         {
+            ManagerSound.instance.StopAudioLoop();
             SceneManager.sceneLoaded -= OnSceneLoaded;
             continueGame = false;
             panelFinishLevel.SetActive(true);

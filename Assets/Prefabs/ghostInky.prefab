@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animGhost: {fileID: 2967355192236289817}
-  speed: 6
+  speed: 3
   timeWaiting: 5
   timeMaxScatter: 10
   timeMaxChasing: 20

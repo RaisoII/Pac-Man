@@ -32,6 +32,6 @@ public class DurationAndCoolDownPower : Buff
 
         description = "reduces cooldown by <color=green>"
                         +reductionCoolDown+" seconds \n </color> and duration by <color=green>"
-                        +incrementDuration+" seconds </color> \n of power <color=yellow>"+nameBuff+"</color>";
+                        +incrementDuration+" seconds </color> \n of power <color=yellow>"+compatibilityPower.getName+"</color>";
     }
 }

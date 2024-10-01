@@ -23,9 +23,9 @@ public class PowerCoolDown : Buff
     }
     public override void generateParametersRandoms()
     {
-        decrementCoolDown = getBiasedRandom(1,5);
+        decrementCoolDown = getBiasedRandom(1,10);
         
-        description = "reduces power cooldown \n<color=yellow>"+nameBuff+
+        description = "reduces power cooldown \n<color=yellow>"+compatibilityPower.getName+
                         "</color> by <color=green>"+decrementCoolDown+" seconds </color>";
     }
 }

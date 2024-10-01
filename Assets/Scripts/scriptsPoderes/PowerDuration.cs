@@ -25,7 +25,7 @@ public class PowerDuration : Buff
     {
         incrementPowerDuration = getBiasedRandom(1,5);
         
-        description = "increases the duration \n of the power <color=yellow>"+nameBuff+
+        description = "increases the duration \n of the power <color=yellow>"+compatibilityPower.getName+
         "</color>\n by <color=green>"+incrementPowerDuration+" seconds </color>";
     }
 }
