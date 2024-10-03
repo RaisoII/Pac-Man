@@ -18,6 +18,7 @@ public class GeneratorPowers : MonoBehaviour
     private GameObject pacMan;
     private int cantPowersOfBuffs;
     private List<InterfaceIcon> powersUsed;
+    private List<InterfaceIcon> powerBuffUsed;
     private Dictionary<int,Power> powerPacman;
     private PowerManagerPacMan managerPower;
     private GameManager gameManager;
@@ -36,6 +37,8 @@ public class GeneratorPowers : MonoBehaviour
         cantPowersOfBuffs = 0;
         
         powersUsed = new List<InterfaceIcon>();
+        powerBuffUsed = new List<InterfaceIcon>();
+
         listIconic =  new List<InterfaceIcon>();
         
         searchPowerForPacMan();
@@ -81,7 +84,7 @@ public class GeneratorPowers : MonoBehaviour
     private void generateBuff()
     {
         Buff newBuff = null;
-        
+        int i = 0;
         while(newBuff == null)
         {
             newBuff = listBuffs[Random.Range(0,listBuffs.Count)];
@@ -89,12 +92,13 @@ public class GeneratorPowers : MonoBehaviour
                 newBuff = null;
             else
                 newBuff.generateParametersRandoms();
+            i++;
         }
 
         setContainer(cantPowersOfBuffs,newBuff);
         cantPowersOfBuffs++;
     }
-
+    
     private void generateBuffPower()
     {
         if(powerPacman.Count == 0)
@@ -103,11 +107,11 @@ public class GeneratorPowers : MonoBehaviour
         Buff buffPower = null;
         
         int i = 0;
-        while(buffPower == null && i < 1000)
+        while(buffPower == null)
         {
             buffPower = listBuffs[Random.Range(0,listBuffs.Count)];
             
-            if(powersUsed.Any(p => p.getName == buffPower.getName))
+            if(powerBuffUsed.Any(p => p.getName == buffPower.getName))
             {
                 buffPower = null;
                 continue;
@@ -120,7 +124,7 @@ public class GeneratorPowers : MonoBehaviour
             }
 
             buffPower.generateParametersRandoms();
-            powersUsed.Add(buffPower);
+            powerBuffUsed.Add(buffPower);
             setContainer(cantPowersOfBuffs,buffPower);
             cantPowersOfBuffs++;
             i++;
@@ -133,7 +137,7 @@ public class GeneratorPowers : MonoBehaviour
             return;
 
         Power newPower = null;
-        
+        int i = 0;
         while(newPower == null)
         {
             int random = Random.Range(0,listPower.Count);
@@ -142,6 +146,8 @@ public class GeneratorPowers : MonoBehaviour
                 newPower = null;
             else
                 powersUsed.Add(newPower);
+        
+            i++;
         }
         
         Power powerClone = newPower.Clone();

@@ -17,5 +17,7 @@ MonoBehaviour:
   cooldown: 55
   radious: -1
   icon: {fileID: -1234995859, guid: 353f88f7f8650654fb645b3d3c95c1ee, type: 3}
-  description: "PacMan will leave a hellish path \nof suffering and pain"
+  description: "His footsteps ignite the land with fiery \ntongues that never fade.
+    Life that once \nflourished now twists in ashes, as unrelenting\nheat etches
+    scars that time cannot erase."
   prefab: {fileID: 2729641555546098204, guid: 6f09467421fcb8a44ba294d13abd39d4, type: 3}

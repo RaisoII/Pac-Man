@@ -64,7 +64,7 @@ public abstract class Ghost : MonoBehaviour
         float time = 0;
         while(time < timeMaxChasing)
         {
-            nextNode = calculateNextNode(true);
+            nextNode = calculateNextNodeChase();
             while(HasReachedDestination(nextNode.transform.position))
             {
                 Move(nextNode.transform.position);
@@ -92,13 +92,14 @@ public abstract class Ghost : MonoBehaviour
     //comportamiento dispersión
     protected  IEnumerator Scatter()
     {
+        direction = Vector2.zero;
         // ir hacia el punto de la esquina
         targetVector = patrolPath[0].transform.position;
         float time = 0;
 
         while(HasReachedDestination(targetVector) && time < timeMaxScatter)
         {
-            nextNode = calculateNextNode(false);
+            nextNode = calculateNextNode();
             while(HasReachedDestination(nextNode.transform.position))
             {
                 Move(nextNode.transform.position);
@@ -141,6 +142,7 @@ public abstract class Ghost : MonoBehaviour
     // es desactivada desde el manager porque no todos los fantasmas lo desactivan al mismo tiempo
     protected  IEnumerator Frightened()
     {
+        direction = Vector2.zero;
         while(true)
         {
             List<Node> neightbors = currentNode.getNeightbors();
@@ -339,7 +341,7 @@ public abstract class Ghost : MonoBehaviour
         }
     }
 
-    protected Node calculateNextNode(bool equalsDirection)
+    protected Node calculateNextNodeChase()
     {
         float minimalDistance = float.MaxValue;
         Vector2 directionAux = direction;
@@ -349,12 +351,9 @@ public abstract class Ghost : MonoBehaviour
         {
             Vector2 posGrid = (Vector2) transform.position + dirVector;
             
-            if(equalsDirection)
-            {
-                if(dirVector == -1*direction) // si la direccion  es a la direccion de la que vengo
-                    continue; 
-            }
-
+            if(dirVector == -1*direction) // si la direccion  es a la direccion de la que vengo
+                continue; 
+    
             float distance = getDistance(posGrid,targetVector);
 
             if(distance < minimalDistance)
@@ -368,6 +367,34 @@ public abstract class Ghost : MonoBehaviour
 
         return currentNode.getNeightbor(direction);
         
+    }
+
+    protected Node calculateNextNode()
+    {
+        List<Node> neightbors = currentNode.getNeightbors();
+        Node idealNode = null;
+        float minimalDistance = float.MaxValue;
+        Vector2 directionAux = direction;
+        
+        foreach(Node neightbor in neightbors)
+        {
+            Vector2 directionNode = currentNode.getDirectionNode(neightbor);
+            
+            if(directionNode == -1*direction) // si la direccion del nodo es distinta a la direccion de la que vengo
+                continue; 
+
+            float distance = getDistance(neightbor.gameObject.transform.position,targetVector);
+
+            if(distance < minimalDistance)
+            {
+                directionAux = directionNode;
+                idealNode = neightbor;
+                minimalDistance = distance; 
+            }
+        }
+
+        direction = directionAux;
+        return idealNode;
     }
 
     public void ChangedStateFrightened(bool active)
@@ -428,7 +455,7 @@ public abstract class Ghost : MonoBehaviour
         
         while(HasReachedDestination(houseNode.transform.position))
         {
-            nextNode = calculateNextNode(true);
+            nextNode = calculateNextNode();
         
             while(HasReachedDestination(nextNode.transform.position))
             {

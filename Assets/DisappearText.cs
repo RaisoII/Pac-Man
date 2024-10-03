@@ -15,6 +15,8 @@ public class DisappearText : MonoBehaviour
 
     private IEnumerator disappearText()
     {
+        yield return new WaitForEndOfFrame();
+        
         float time = 0; 
         Color colorText = text.color;
         while (time < visibleTime)

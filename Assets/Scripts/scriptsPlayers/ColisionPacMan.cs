@@ -26,7 +26,7 @@ public class ColisionPacMan : MonoBehaviour
         if(col.CompareTag("pacDots"))
         {
             bool activeFrightened = col.gameObject.GetComponent<PacDots>().getactiveFrightened();
-            levelManager.deletePacDot(activeFrightened,col.gameObject);
+            levelManager.deletePacDot(activeFrightened);
             
             if (!isEating)
             {
@@ -48,6 +48,7 @@ public class ColisionPacMan : MonoBehaviour
             {
                 ManagerSound.instance.PlaySFX(eatGhost,false);
                 col.gameObject.GetComponent<Ghost>().deathGhost();
+                levelManager.spawnTextDeathGhost();
             }
             else
             {

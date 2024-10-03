@@ -264,7 +264,7 @@ public class selectorPower : MonoBehaviour
         if(listCurrentContainer == listNewPowerContainer)
         {
             currentIcon = generatorPowers.getInterfaceIcon(indexContainer);
-            textDescription.text ="     "+currentIcon.getName +"\n\n"+currentIcon.getDescription;
+            textDescription.text ="            "+currentIcon.getName +"\n"+currentIcon.getDescription;
         }
 
         ManagerSound.instance.PlaySFX(moveUI,false);

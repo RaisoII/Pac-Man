@@ -92,10 +92,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    public void incrementScore()
+    public void incrementScore(int cant)
     {
         int valueScore = int.Parse(score.text);
-        score.text = ""+(valueScore + 10);
+        score.text = ""+(valueScore + cant);
     }
 
     public bool removeOneLive()

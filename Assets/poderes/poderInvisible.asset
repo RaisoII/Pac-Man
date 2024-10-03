@@ -17,6 +17,13 @@ MonoBehaviour:
   cooldown: 35
   radious: -1
   icon: {fileID: 1927996686, guid: 353f88f7f8650654fb645b3d3c95c1ee, type: 3}
-  description: "PacMan wraps himself in a cloak\nof invisibility,becoming intangible\nand
-    eluding the presence of \nghosts like a shadow in the dark."
+  description: 'Pac-Man''s form dissolves into the ether,
+
+    leaving only a faint
+    echo of his former self. The creatures
+
+    of darkness remain oblivious to his
+    presence, as he glides
+
+    through the shadows, invisible and untouchable.'
   prefab: {fileID: 6755274396155109915, guid: 26d1e47df57ac7d4dae2551af0b7b277, type: 3}

@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
     private int cantPacDotsConsume;
     private bool isFirstTimeStart;
     private ManagerKeys managerKeys;
-    private void Awake()
+    private void Start()
     {
         ManagerSound.instance.StopAudioLoop();  // puede quedar un sonido loopeado del nivel anterior 
         isFirstTimeStart = true;
@@ -33,6 +33,7 @@ public class LevelManager : MonoBehaviour
         spawn = gameObject.GetComponent<SpawnerManager>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         managerKeys = gameManager.GetComponent<ManagerKeys>();
+        managerKeys.enabled = false;
         
         timeFrightenedRutine += (timeFrightenedRutine * gameManager.getPercentageFrightened()) / 100f;
         spawn.instantiatePrefabs();
@@ -70,6 +71,8 @@ public class LevelManager : MonoBehaviour
             ghost.setCurrentNode();
         
         movPac.resetPositionAndDirection();
+
+        arrayPacDots =  GameObject.FindGameObjectsWithTag("pacDots"); 
 
         foreach(GameObject pacDots in arrayPacDots)
         {
@@ -116,13 +119,16 @@ public class LevelManager : MonoBehaviour
         gameManager.startGame();
         managerKeys.enabled = true;
     }
-    public void deletePacDot(bool activeFrightened,GameObject pacDot)
+    public void deletePacDot(bool activeFrightened)
     {
         cantPacDots--;
         cantPacDotsConsume++;
-        instantiateText();
+        instantiateText(false);
+        
         if(cantPacDots == 0)
         {
+            managerKeys.enabled = false;
+            StopAllCoroutines(); // la rutina de asustado
             ManagerSound.instance.StopAudioLoop(); // para los sonidos en loop
             gameManager.existNextLevel();
             enabledMovementPrefabs(false);
@@ -143,16 +149,30 @@ public class LevelManager : MonoBehaviour
             else 
                 timeFrightenedRutineAux += timeFrightenedRutine; 
         }
-
-        gameManager.incrementScore();
     }
 
-    private void instantiateText()
+    private void instantiateText(bool textUp)
     {
         Vector2 dirPacMan = -1*movPac.getDirection();
         Vector2 posText = (Vector2)movPac.gameObject.transform.localPosition + dirPacMan + new Vector2(0,0.5f); // un poco mas arriba
         GameObject objectText = Instantiate(prefabText,posText,Quaternion.identity);
-        objectText.GetComponent<DisappearText>().setCant(cantPacDotsConsume);
+        DisappearText disappearText = objectText.GetComponent<DisappearText>();
+        int cant;
+
+        if(textUp) // mata a un fantasma
+        {
+            cant = 200;
+            objectText.GetComponent<TextUp>().enabled = true;
+            disappearText.setCant(cant);
+        }
+        else
+        {
+            cant = 10;
+            disappearText.setCant(cantPacDotsConsume);
+        }
+        
+        
+        gameManager.incrementScore(cant);
     }
 
     private IEnumerator frightenedTime()
@@ -185,6 +205,7 @@ public class LevelManager : MonoBehaviour
 
     public void deathPacMan()
     { 
+        StopAllCoroutines(); // la rutina de asustado
         managerKeys.enabled = false;
         GameObject pacMan = movPac.gameObject;
         pacMan.GetComponent<BoxCollider2D>().enabled = false;
@@ -210,16 +231,19 @@ public class LevelManager : MonoBehaviour
     {
         arrayPacDots =  GameObject.FindGameObjectsWithTag("pacDots"); 
         
+        GoToTargetIMAN gotoPacMan;
+        
         foreach(GameObject pacDot in arrayPacDots)
         {
-            GoToTargetIMAN gotoPacMan = pacDot.GetComponent<GoToTargetIMAN>();
-            if(gotoPacMan != null)
+            if(pacDot.TryGetComponent(out gotoPacMan))
             {
                 gotoPacMan.stopCoroutine();
                 Destroy(gotoPacMan);
             }
         }
     }
+
+    public void spawnTextDeathGhost() => instantiateText(true);
 
     private void enabledMovementPrefabs(bool value)
     {

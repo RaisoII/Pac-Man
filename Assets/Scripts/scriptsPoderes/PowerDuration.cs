@@ -23,7 +23,7 @@ public class PowerDuration : Buff
 
     public override void generateParametersRandoms()
     {
-        incrementPowerDuration = getBiasedRandom(1,5);
+        incrementPowerDuration = getBiasedRandom(1,10);
         
         description = "increases the duration \n of the power <color=yellow>"+compatibilityPower.getName+
         "</color>\n by <color=green>"+incrementPowerDuration+" seconds </color>";

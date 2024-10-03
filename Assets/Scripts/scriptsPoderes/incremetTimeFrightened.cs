@@ -11,7 +11,7 @@ public class incremetTimeFrightened : Buff
 
     public override void generateParametersRandoms()
     {
-        timeFrightened = Random.Range(1,5);
+        timeFrightened = Random.Range(1,10);
         description =  "increases time Frightened by <color=green>"+timeFrightened+"% </color>";
     }
 

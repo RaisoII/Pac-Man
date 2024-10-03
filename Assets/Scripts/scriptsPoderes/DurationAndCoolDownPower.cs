@@ -27,7 +27,7 @@ public class DurationAndCoolDownPower : Buff
     }
     public override void generateParametersRandoms()
     {
-        incrementDuration = getBiasedRandom(1,5);
+        incrementDuration = getBiasedRandom(1,8);
         reductionCoolDown = getBiasedRandom(1,10);
 
         description = "reduces cooldown by <color=green>"

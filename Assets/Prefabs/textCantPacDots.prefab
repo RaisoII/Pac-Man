@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5552518528497680847}
   - component: {fileID: 8877810556731426785}
   - component: {fileID: -6629647882438442013}
+  - component: {fileID: -4259593279651529456}
   m_Layer: 0
   m_Name: textCantPacDots
   m_TagString: Untagged
@@ -186,3 +187,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visibleTime: 1.5
   text: {fileID: 8877810556731426785}
+--- !u!114 &-4259593279651529456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6697946261659423627}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cefda13e69e819a4f85963b3f840445c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -10,7 +10,7 @@ public class ReduceSpeedGhost : Buff
 
     public override void generateParametersRandoms()
     {
-        speedGhost = getBiasedRandom(1,5);
+        speedGhost = getBiasedRandom(1,8);
         description =  "reduces the speed of ghosts by <color=red>"+speedGhost+"% </color>";
     }
 
